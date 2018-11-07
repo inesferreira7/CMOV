@@ -5,20 +5,25 @@ var Schema = mongoose.Schema;
 
 var CustomerSchema = new Schema({
     name: {
-        type: String
+        type: String,
+        required: true
     },
     nif: {
-        type: Number
+        type: Number,
+        required: true
     },
     credit_card: {
         card_type:{
-            type: String
+            type: String,
+            required: true
         },
         card_number: {
-            type: Number
+            type: Number,
+            required: true
         },
         validity: {
-            type: String
+            type: String,
+            required: true
         }
     }
 });

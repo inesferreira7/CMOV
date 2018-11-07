@@ -4,8 +4,8 @@ var mongoose = require('mongoose'),
     Customer = require('../models/customerModel');
 
 // Lists all app customers
-exports.listAllCustomers = function(req, res) {
-  Customer.find({}, function(err, customer){
+exports.getAllCustomers = (req, res) => {
+  Customer.find({}, (err, customer) => {
     if (err) res.send(err);
     res.json(customer);
   });
@@ -26,29 +26,27 @@ exports.createCustomer = (req, res) => {
     .catch(err => {
         res.send(err);
     });
-}
+};
 
 // Retrieves a customer with a certain ID
-exports.getCustomer = function(req, res) {
-    Customer.findById(req.params.customerId, function(err, customer) {
+exports.getCustomer = (req, res) => {
+    Customer.findById(req.params.customerId, (err, customer) => {
         if (err) res.send(err);
         res.json(customer);
     });
 };
 
 // Updates a customer with a certain ID
-exports.updateCustomer = function(req, res) {
-    Customer.findOneAndUpdate({_id: req.params.customerId}, req.body, {new: true}, function(err , customer){
+exports.updateCustomer = (req, res) => {
+    Customer.findOneAndUpdate({_id: req.params.customerId}, req.body, {new: true}, (err , customer) => {
         if (err) res.send(err);
         res.json(customer);
     });
 }
 
 // Deletes a customer with a certain ID
-exports.deleteCustomer = function(req, res) {
-    Customer.remove({
-        _id: req.params.customerId
-    }, function(err, customer) {
+exports.deleteCustomer = (req, res) => {
+    Customer.remove({ _id: req.params.customerId }, (err, customer) => {
         if (err) res.send(err);
         res.json({message: 'Customer successfully deleted'});
     })
