@@ -12,7 +12,7 @@ exports.getAllCustomers = (req, res) => {
 };
 
 // Creates a new app customer
-exports.createCustomer = (req, res) => {
+exports.registerCustomer = (req, res) => {
     var customer = new Customer({
         name: req.body.name,
         nif: req.body.nif,

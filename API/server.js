@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 require('./api/routes/customerRoutes')(app);
+require('./api/routes/performanceRoutes')(app);
+require('./api/routes/ticketRoutes')(app);
 
 app.listen(port);
 
