@@ -4,6 +4,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CustomerSchema = new Schema({
+    public_key : {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true

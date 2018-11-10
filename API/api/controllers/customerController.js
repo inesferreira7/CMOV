@@ -6,12 +6,12 @@ var mongoose = require('mongoose'),
 /*
  * Retrieves all customers.
  * If an error is encountered, sends a response with a 500 status code and the error description.
- * If no error is encountered, sends a response with a 200 status code.
+ * If no error is encountered, sends a response with a 200 status code and the customer list.
  */
 exports.getAllCustomers = (req, res) => {
-  Customer.find({}, (err) => {
+  Customer.find({}, (err, list) => {
     if (err) res.status(500).send(err);
-    res.status(200).send();
+    res.status(200).send(list);
   });
 };
 
@@ -22,6 +22,7 @@ exports.getAllCustomers = (req, res) => {
  */
 exports.registerCustomer = (req, res) => {
     var customer = new Customer({
+        public_key: req.body.key,
         name: req.body.name,
         nif: req.body.nif,
         credit_card: req.body.credit_card

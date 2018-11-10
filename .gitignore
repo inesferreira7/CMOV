@@ -9,3 +9,7 @@
 /captures
 .externalNativeBuild
 API/node_modules/*
+CLIENT/.idea/*
+CLIENT/.gradle/*
+CLIENT/local.properties
+CLIENT/app/build/*
