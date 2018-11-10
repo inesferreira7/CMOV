@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">MusicLine</string>
+    <string name="header_register">Register</string>
+    <string name="header_personal">Personal information</string>
+    <string name="register_name"><font size="15">Name: </font></string>
+    <string name="register_username"><font size="15">Username: </font></string>
+    <string name="register_email"><font size="15">E-mail: </font></string>
+    <string name="register_password"><font size="15">Password: </font></string>
+    <string name="register_confirmPassword"><font size="15"> Confirm password: </font></string>
+    <string name="register_nif"><font size="15">NIF: </font></string>
+    <string name="header_card">Card information</string>
+    <string name="register_type"><font size="15">Type: </font></string>
+    <string name="register_visa"><font size="15">VISA</font></string>
+    <string name="register_masterCard"><font size="15">MasterCard</font></string>
+    <string name="register_americanExpress"><font size="15">American Express</font></string>
+    <string name="register_cardNumber"><font size="15">Number: </font></string>
+    <string name="register_cardValidity"><font size="15">Validity (MM/AA): </font></string>
+    <string name="register_button"><font size="15">Register</font></string>
+
+    <!-- Error messages -->
+    <string name="error_name">Insert a valid name with only letters</string>
+    <string name="error_username">Insert a valid username with letters, numbers, points, dashes or underscores with length higher than > 3</string>
+    <string name="error_email">Insert a valid e-mail</string>
+    <string name="error_password">Insert a valid alphanumeric password with length higher than 8</string>
+    <string name="error_confirmPass">Password do not match </string>
+    <string name="error_nif">Insert a valid NIF</string>
+
+</resources>
