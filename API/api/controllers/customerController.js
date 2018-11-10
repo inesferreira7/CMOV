@@ -35,7 +35,8 @@ exports.registerCustomer = (req, res) => {
     });
 };
 
-/* Retrieves a customer with a certain ID.
+/* 
+ * Retrieves a customer with a certain ID.
  * If an error is encountered, sends a response with a 500 status code and the error description.
  * If no error is encountered, sends a response with a 200 status code and the found customer.
  */
@@ -46,19 +47,20 @@ exports.getCustomer = (req, res) => {
     });
 };
 
-/* Updates a customer with a certain ID.
+/* 
+ * Updates a customer with a certain ID.
  * If an error is encountered, sends a response with a 500 status code and the error description.
  * If no error is encountered, sends a response with a 200 status code.
  */
 exports.updateCustomer = (req, res) => {
-    console.log(req.body);
     Customer.findOneAndUpdate({_id: req.params.customerId}, req.body, {returnNewDocument: false}, (err) => {
         if (err) res.status(500).send(err);
         res.status(200).send();
     });
 }
 
-/* Deletes a customer with a certain 
+/* 
+ * Deletes a customer with a certain 
  * If an error is encountered, sends a response with a 500 status code and the error description.
  * If no error is encountered, sends a response with a 200 status code.
  */

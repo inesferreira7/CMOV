@@ -3,15 +3,23 @@
 var mongoose = require('mongoose'),
     Performance = require('../models/performanceModel');
 
-// Lists all app performances
+/*
+ * Retrieves all performances.
+ * If an error is encountered, sends a response with a 500 status code and the error description.
+ * If no error is encountered, sends a response with a 200 status code and the performance list.
+ */
 exports.getAllPerformances = (req, res) => {
-  Performance.find({}, (err, customer) => {
-    if (err) res.send(err);
-    res.json(customer);
+  Performance.find({}, (err, list) => {
+    if (err) res.status(500).send(err);
+    res.status(200).send(list);
   });
 };
 
-// Creates a new performance
+/*
+ * Creates a new performance.
+ * If an error is encountered, sends a response with a 500 status code and the error description.
+ * If no error is encountered, sends a response with a 200 status code. 
+ */
 exports.createPerformance = (req, res) => {
     var performance = new Performance({
         name: req.body.name,
@@ -20,35 +28,44 @@ exports.createPerformance = (req, res) => {
         ticketPrice: req.body.ticketPrice
     });
 
-    performance.save()
-    .then(data => {
-        res.send(data);
-    })
-    .catch(err => {
-        res.send(err);
+    performance.save((err) =>{
+        if (err) res.status(500).send(err);
+        res.status(200).send();
     });
 };
 
-// Retrieves a performance with a certain ID
+/* 
+ * Retrieves a performance with a certain ID.
+ * If an error is encountered, sends a response with a 500 status code and the error description.
+ * If no error is encountered, sends a response with a 200 status code and the found performance.
+ */
 exports.getPerformance = (req, res) => {
     Performance.findById(req.params.performanceId, (err, performance) => {
-        if (err) res.send(err);
-        res.json(performance);
+        if (err) res.status(500).send(err);
+        res.status(200).send(performance);
     });
 };
 
-// Updates a performance with a certain ID
+/* 
+ * Updates a performance with a certain ID.
+ * If an error is encountered, sends a response with a 500 status code and the error description.
+ * If no error is encountered, sends a response with a 200 status code.
+ */
 exports.updatePerformance = (req, res) => {
-    Performance.findOneAndUpdate({ _id: req.params.performanceId }, req.body, { new: true }, (err, performance) => {
-        if (err) res.send(err);
-        res.json(performance);
+    Performance.findOneAndUpdate({ _id: req.params.performanceId }, req.body, { new: true }, (err) => {
+        if (err) res.status(500).send(err);
+        res.status(200).send();
     });
 }
 
-// Deletes a performance with a certain ID
+/* 
+ * Deletes a performance with a certain 
+ * If an error is encountered, sends a response with a 500 status code and the error description.
+ * If no error is encountered, sends a response with a 200 status code.
+ */
 exports.deletePerformance = (req, res) => {
-    Performance.remove({ _id: req.params.performanceId }, (err, performance) => {
-        if (err) res.send(err);
-        res.jseon({ message: 'Performance successfully deleted' })
+    Performance.remove({ _id: req.params.performanceId }, (err) => {
+        if (err) res.status(500).send(err);
+        res.status(200).send();
     });
 };
