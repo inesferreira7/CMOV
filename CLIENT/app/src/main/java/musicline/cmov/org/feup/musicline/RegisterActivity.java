@@ -1,6 +1,7 @@
 package musicline.cmov.org.feup.musicline;
 
 import android.app.DownloadManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -149,6 +150,9 @@ public class RegisterActivity extends AppCompatActivity {
                     try {
                         String publicKey = generateKeyPair();
                         //TODO Generate JSON to send request
+
+                        Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
+                        startActivity(intent);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
