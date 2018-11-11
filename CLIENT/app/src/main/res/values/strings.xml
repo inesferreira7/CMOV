@@ -41,5 +41,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="default_shows">Hello shows</string>
+    <string name="default_cafeteria">Hello cafeteria</string>
+    <string name="default_tickets">Hello tickets</string>
+    <string name="default_vouchers">Hello vouchers</string>
 
 </resources>

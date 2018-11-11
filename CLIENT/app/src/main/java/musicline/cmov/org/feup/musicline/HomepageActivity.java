@@ -85,10 +85,25 @@ public class HomepageActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fram, showsFragment, "Shows fragment");
             fragmentTransaction.commit();
+        } else if(id == R.id.nav_cafeteria){
+            setTitle("Cafeteria"); //this will set the title of action bar
+            CafeteriaFragment cafeteriaFragment = new CafeteriaFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fram, cafeteriaFragment, "Cafeteria fragment");
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_myTickets) {
+            setTitle("My Tickets"); //this will set the title of action bar
+            MyTicketsFragment myTicketsFragment = new MyTicketsFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fram, myTicketsFragment, "My Tickets fragment");
+            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_myVouchers) {
-
+            setTitle("My Vouchers"); //this will set the title of action bar
+            MyVouchersFragment myVouchersFragment = new MyVouchersFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fram, myVouchersFragment, "My Vouchers fragment");
+            fragmentTransaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
