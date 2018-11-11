@@ -150,9 +150,6 @@ public class RegisterActivity extends AppCompatActivity {
                     try {
                         String publicKey = generateKeyPair();
                         //TODO Generate JSON to send request
-
-                        Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
-                        startActivity(intent);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

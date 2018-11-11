@@ -26,5 +26,17 @@
     <string name="error_nif">Insert a valid NIF</string>
     <string name="error_type">Choose one</string>
     <string name="error_cardNumber">Insert a valid card number</string>
+    <string name="title_activity_homepage">Homepage</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <!--NavigationDrawer strings -->
+    <string name="nav_shows">Shows</string>
+    <string name="nav_cafeteria">Cafeteria</string>
+    <string name="nav_myTickets">My Tickets</string>
+    <string name="nav_myVouchers">My Vouchers</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
