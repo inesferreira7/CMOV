@@ -8,4 +8,11 @@
     tools:context=".HomepageActivity"
     tools:showIn="@layout/app_bar_homepage">
 
+    <FrameLayout
+        android:id="@+id/fram"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

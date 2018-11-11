@@ -3,6 +3,7 @@ package musicline.cmov.org.feup.musicline;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -82,7 +83,11 @@ public class HomepageActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_shows) {
-            // Handle the camera action
+            setTitle("Shows"); //this will set the title of action bar
+            ShowsFragment showsFragment = new ShowsFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fram, showsFragment, "Shows fragment");
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_myTickets) {
 
         } else if (id == R.id.nav_myVouchers) {
