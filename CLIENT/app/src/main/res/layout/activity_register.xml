@@ -31,7 +31,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="15dp">
 
             <TextView
                 android:id="@+id/header_personal"
@@ -118,13 +118,13 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:hint="@string/register_nif"
-                android:inputType="textPassword" />
+                android:inputType="number" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
 
             <TextView
                 android:id="@+id/header_card"
@@ -149,30 +149,41 @@
                 android:text="@string/register_type"
                 android:textColor="?android:textColorHint"
                 android:textSize="22sp" />
+            <TextView
+            android:id="@+id/register_warning"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="" />
+        </TableRow>
 
-            <RadioGroup
-                android:id="@+id/register_cardType"
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+        <RadioGroup
+            android:id="@+id/register_cardType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/register_visa"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="@string/register_visa" />
 
-                <RadioButton
-                    android:id="@+id/rb_visa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_visa" />
+            <RadioButton
+                android:id="@+id/register_masterCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_masterCard" />
 
-                <RadioButton
-                    android:id="@+id/rb_sit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_masterCard" />
-
-                <RadioButton
-                    android:id="@+id/rb_delivery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_americanExpress" />
-            </RadioGroup>
+            <RadioButton
+                android:id="@+id/register_americanExpress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_americanExpress" />
+        </RadioGroup>
         </TableRow>
 
         <TableRow

@@ -24,5 +24,7 @@
     <string name="error_password">Insert a valid alphanumeric password with length higher than 8</string>
     <string name="error_confirmPass">Password do not match </string>
     <string name="error_nif">Insert a valid NIF</string>
+    <string name="error_type">Choose one</string>
+    <string name="error_cardNumber">Insert a valid card number</string>
 
 </resources>
