@@ -2,7 +2,9 @@ package musicline.cmov.org.feup.musicline;
 
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.security.KeyPairGeneratorSpec;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,14 +14,17 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
@@ -30,15 +35,31 @@ import com.basgeekball.awesomevalidation.utility.custom.CustomValidation;
 import com.basgeekball.awesomevalidation.utility.custom.CustomValidationCallback;
 import com.google.common.collect.Range;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.cert.CertificateException;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.security.auth.x500.X500Principal;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -46,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button register;
     AwesomeValidation validation;
     RadioGroup type;
+    RadioButton type_chosen;
 
 
     @Override
@@ -58,8 +80,8 @@ public class RegisterActivity extends AppCompatActivity {
         updateUI();
     }
 
-        //Handling validation of card validity
-        TextWatcher validityWatcher = new TextWatcher() {
+    //Handling validation of card validity
+    TextWatcher validityWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
@@ -95,7 +117,6 @@ public class RegisterActivity extends AppCompatActivity {
     };
 
     private void updateUI() {
-
         name = (EditText) findViewById(R.id.register_name);
         username = (EditText) findViewById(R.id.register_username);
         email = (EditText) findViewById(R.id.register_email);
@@ -144,12 +165,29 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int selectedId = type.getCheckedRadioButtonId();
+                type_chosen = (RadioButton)findViewById(selectedId);
 
                 if (validation.validate()) {
                     Toast.makeText(RegisterActivity.this, "Data received successfully!", Toast.LENGTH_SHORT).show();
                     try {
-                        String publicKey = generateKeyPair();
-                        //TODO Generate JSON to send request
+                        KeyPair keyPair = generateKeyPair();
+
+                        if (keyPair != null) {
+                            PublicKey public_key = keyPair.getPublic();
+
+                            JSONObject customer = new JSONObject();
+                            customer.put("name", name.getText().toString());
+                            customer.put("nif", nif.getText().toString());
+                            JSONObject credit_card = new JSONObject();
+                            credit_card.put("card_type", type_chosen.getText().toString());
+                            credit_card.put("card_number", cardNumber.getText().toString());
+                            credit_card.put("validity", cardValidity.getText().toString());
+                            customer.put("credit_card", credit_card);
+                            customer.put("key", byteToString(public_key.getEncoded()));
+
+                            registerCustomer(customer);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -161,36 +199,84 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void request(String method, String parameter) throws Exception {
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = Globals.url + "/customers";
+    private KeyPair generateKeyPair() {
+        KeyStore keystore = null;
+        try {
+            keystore = KeyStore.getInstance("AndroidKeyStore");
+            keystore.load(null);
+            String alias = "private_key";
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("Response", response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+            KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(this)
+                    .setAlias(alias)
+                    .setSubject(new X500Principal("CN=Sample Name, O=Android Authority"))
+                    .setSerialNumber(BigInteger.ONE)
+                    .setStartDate(Calendar.getInstance().getTime())
+                    .setEndDate(Calendar.getInstance().getTime())
+                    .build();
 
-                    }
-                });
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA", "AndroidKeyStore");
+            keyGen.initialize(spec);
 
-        queue.add(stringRequest);
+            KeyPair keyPair = keyGen.genKeyPair();
+
+            return keyPair;
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
-    private String generateKeyPair() throws NoSuchAlgorithmException {
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(512);
-        byte[] publicKey = keyGen.genKeyPair().getPublic().getEncoded();
+    private String byteToString(byte[] array){
+        String array_string = new String();
 
-        String retString = new String();
-        for (int i = 0; i < publicKey.length; i++) {
-            retString += Integer.toString(publicKey[i]);
+        for(int i = 0; i < array.length; i++) {
+            array_string += Integer.toString(array[i]);
         }
-        return retString;
+
+        return array_string;
+    }
+
+    private void registerCustomer(final JSONObject customer) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Globals.URL + "/customer/register";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, customer, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.i("Response", response.toString());
+                    try {
+                        String uuid = response.getString("uuid");
+
+                        SharedPreferences.Editor editor = getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE).edit();
+                        editor.putString("uuid", uuid);
+                        editor.apply();
+
+                        Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("Error API call", error.toString());
+                }
+            });
+
+        queue.add(request);
     }
 }
