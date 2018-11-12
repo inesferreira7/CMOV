@@ -31,7 +31,12 @@ exports.registerCustomer = (req, res) => {
     // On save, sends the UUID of the customer back to the app.
     customer.save((err, data) => {
         if (err) res.status(500).send(err);
-        res.status(200).send(data._id);
+        else {
+            res.status(200).send({uuid: data._id });
+
+            var date = new Date();
+            console.log("/customer/register: " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+        }
     });
 };
 
