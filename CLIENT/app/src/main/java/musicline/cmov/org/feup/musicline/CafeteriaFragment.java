@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class CafeteriaFragment extends Fragment{
 
-    CardView card_coffee;
+    CardView coffee_card, soda_card, popcorn_card, sandwich_card;
     public CafeteriaFragment() {
         // Required empty public constructor
     }
@@ -27,11 +27,35 @@ public class CafeteriaFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_cafeteria, container, false);
 
-        card_coffee = (CardView) view.findViewById(R.id.card_coffee);
-        card_coffee.setOnClickListener(new View.OnClickListener() {
+        coffee_card = (CardView) view.findViewById(R.id.coffee_card);
+        coffee_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("coffee", "Clicked on coffee");
+            }
+        });
+
+        soda_card = (CardView) view.findViewById(R.id.soda_card);
+        soda_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("coffee", "Clicked on soda");
+            }
+        });
+
+        popcorn_card = (CardView) view.findViewById(R.id.popcorn_card);
+        popcorn_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("coffee", "Clicked on popcorn");
+            }
+        });
+
+        sandwich_card = (CardView) view.findViewById(R.id.sandwich_card);
+        sandwich_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("coffee", "Clicked on sandwich");
             }
         });
 

@@ -118,10 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUI() {
         name = (EditText) findViewById(R.id.register_name);
-        username = (EditText) findViewById(R.id.register_username);
         email = (EditText) findViewById(R.id.register_email);
-        password = (EditText) findViewById(R.id.register_password);
-        confirmPassword = (EditText) findViewById(R.id.register_confirmPassword);
         nif = (EditText) findViewById(R.id.register_nif);
         register = (Button) findViewById(R.id.register_button);
         type = (RadioGroup) findViewById(R.id.register_cardType);
