@@ -12,10 +12,6 @@ var PerformanceSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-    nTickets: {
-        type: Number,
-        required: true
-    },
     ticketPrice: {
         type: Number,
         required: true

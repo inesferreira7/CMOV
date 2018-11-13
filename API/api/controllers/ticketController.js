@@ -11,21 +11,17 @@ var mongoose = require('mongoose'),
  */
 exports.buyTickets = (req, res) => {
     var ticket = new Ticket({
-        performance: req.body.performance,
-        customer: req.body.customer,
+        performanceName: req.body.performanceName,
+        performanceDate: req.body.performanceDate,
+        performanceId: req.body.performanceId,
+        customerId: req.body.customerId,
+        seat: req.body.seat,
         isUsed: false
     });
 
-    ticket.save((err) => {
+    ticket.save((err, ticket) => {
         if(err) res.status(500).send(err);
-        for(var n = 0; n < req.body.quantity; n++) {
-            res.status(200).send();
-        }
-    }).then(() => {
-        Performance.findOneAndUpdate({ _id : ticket.performance }, {$inc: {nTickets: -1 * ticket.quantity}}, {new: true}, (err, performance) => {
-            if (err) res.status(500).send(err);
-            res.status(200).send({updated: "completed"});
-        });
+        res.status(200).send({uuid: ticket._id});
     });
 };
 
@@ -35,7 +31,7 @@ exports.buyTickets = (req, res) => {
  * If no error is encountered, sends a response with a 200 status code and the list of the tickets.
  */
 exports.getCustomerTickets = (req, res) => {
-    var query = {customer: req.params.customerId}
+    var query = {customerId: req.params.customerId}
     
     Ticket.find(query, (err, tickets) => {
         if (err) res.status(500).send(err);
@@ -63,7 +59,7 @@ exports.deleteTicket = (req, res) => {
 exports.validateTicket = (req, res) => {
     var query = {
         _id: req.params.ticketId,
-        customer: req.params.customerId,
+        customerId: req.params.customerId,
         isUsed: false
     };
 

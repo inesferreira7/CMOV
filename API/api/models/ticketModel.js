@@ -4,12 +4,24 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var TicketSchema = new Schema({
-    performance: {
+    performanceName: {
+        type: String,
+        required: true
+    },
+    performanceDate: {
+        type: String,
+        required: true
+    },
+    performanceId: {
         type: Schema.Types.ObjectId,
         required: true
     },
-    customer: {
+    customerId: {
         type: Schema.Types.ObjectId,
+        required: true
+    },
+    seat: {
+        type: String,
         required: true
     },
     isUsed: {

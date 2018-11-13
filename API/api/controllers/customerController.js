@@ -11,7 +11,7 @@ var mongoose = require('mongoose'),
 exports.getAllCustomers = (req, res) => {
   Customer.find({}, (err, list) => {
     if (err) res.status(500).send(err);
-    res.status(200).send(list);
+    res.status(200).send(list.json());
   });
 };
 
