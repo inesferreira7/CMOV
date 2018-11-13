@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 public class CafeteriaFragment extends Fragment{
 
+    HashMap<Globals.Item, Integer> order;
     CardView coffee_card, soda_card, popcorn_card, sandwich_card;
     public CafeteriaFragment() {
         // Required empty public constructor
@@ -26,12 +27,22 @@ public class CafeteriaFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_cafeteria, container, false);
+        order = new HashMap<>();
 
         coffee_card = (CardView) view.findViewById(R.id.coffee_card);
         coffee_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("coffee", "Clicked on coffee");
+                //Key existence check
+                Integer quantity = order.get(Globals.Item.COFFEE);
+                if(quantity == null) {
+                    order.put(Globals.Item.COFFEE, 1);
+                    Log.e("oi", order.toString());
+                }
+                else {
+                    order.put(Globals.Item.COFFEE, quantity+1); //override
+                    Log.e("new", order.toString());
+                }
             }
         });
 
@@ -39,7 +50,15 @@ public class CafeteriaFragment extends Fragment{
         soda_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("coffee", "Clicked on soda");
+                Integer quantity = order.get(Globals.Item.SODA);
+                if(quantity == null) {
+                    order.put(Globals.Item.SODA, 1);
+                    Log.e("oi", order.toString());
+                }
+                else {
+                    order.put(Globals.Item.SODA, quantity+1); //override
+                    Log.e("new", order.toString());
+                }
             }
         });
 
@@ -47,7 +66,15 @@ public class CafeteriaFragment extends Fragment{
         popcorn_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("coffee", "Clicked on popcorn");
+                Integer quantity = order.get(Globals.Item.POPCORN);
+                if(quantity == null) {
+                    order.put(Globals.Item.POPCORN, 1);
+                    Log.e("oi", order.toString());
+                }
+                else {
+                    order.put(Globals.Item.POPCORN, quantity+1); //override
+                    Log.e("new", order.toString());
+                }
             }
         });
 
@@ -55,7 +82,15 @@ public class CafeteriaFragment extends Fragment{
         sandwich_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("coffee", "Clicked on sandwich");
+                Integer quantity = order.get(Globals.Item.SANDWICH);
+                if(quantity == null) {
+                    order.put(Globals.Item.SANDWICH, 1);
+                    Log.e("oi", order.toString());
+                }
+                else {
+                    order.put(Globals.Item.SANDWICH, quantity+1); //override
+                    Log.e("new", order.toString());
+                }
             }
         });
 
