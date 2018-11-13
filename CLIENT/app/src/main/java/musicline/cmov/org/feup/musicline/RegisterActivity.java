@@ -118,10 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUI() {
         name = (EditText) findViewById(R.id.register_name);
-        username = (EditText) findViewById(R.id.register_username);
         email = (EditText) findViewById(R.id.register_email);
-        password = (EditText) findViewById(R.id.register_password);
-        confirmPassword = (EditText) findViewById(R.id.register_confirmPassword);
         nif = (EditText) findViewById(R.id.register_nif);
         register = (Button) findViewById(R.id.register_button);
         type = (RadioGroup) findViewById(R.id.register_cardType);
@@ -131,10 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         //Validation area
         validation.addValidation(RegisterActivity.this, R.id.register_name, "[a-zA-Z\\s]+", R.string.error_name);
-        validation.addValidation(RegisterActivity.this, R.id.register_username, "^[a-zA-Z0-9._-]{3,}$", R.string.error_username);
         validation.addValidation(RegisterActivity.this, R.id.register_email, Patterns.EMAIL_ADDRESS, R.string.error_email);
-        validation.addValidation(RegisterActivity.this, R.id.register_password, "^[A-Za-z0-9]{8,}$", R.string.error_password);
-        validation.addValidation(RegisterActivity.this, R.id.register_confirmPassword, R.id.register_password, R.string.error_confirmPass);
         validation.addValidation(RegisterActivity.this, R.id.register_nif, "^\\d{9}$", R.string.error_nif);
         validation.addValidation(RegisterActivity.this, R.id.register_cardType, new CustomValidation() {
             @Override

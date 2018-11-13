@@ -62,50 +62,11 @@
             android:layout_marginTop="10dp">
 
             <EditText
-                android:id="@+id/register_username"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:hint="@string/register_username"
-                android:inputType="text" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-
-            <EditText
                 android:id="@+id/register_email"
                 android:layout_weight="1"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:hint="@string/register_email"
                 android:inputType="textEmailAddress" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-
-            <EditText
-                android:id="@+id/register_password"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:hint="@string/register_password"
-                android:inputType="textPassword" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-
-            <EditText
-                android:id="@+id/register_confirmPassword"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:hint="@string/register_confirmPassword"
-                android:inputType="textPassword" />
         </TableRow>
 
         <TableRow

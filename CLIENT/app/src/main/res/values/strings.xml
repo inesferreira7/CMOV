@@ -3,10 +3,7 @@
     <string name="header_register">Register</string>
     <string name="header_personal">Personal information</string>
     <string name="register_name"><font size="15">Name: </font></string>
-    <string name="register_username"><font size="15">Username: </font></string>
     <string name="register_email"><font size="15">E-mail: </font></string>
-    <string name="register_password"><font size="15">Password: </font></string>
-    <string name="register_confirmPassword"><font size="15"> Confirm password: </font></string>
     <string name="register_nif"><font size="15">NIF: </font></string>
     <string name="header_card">Card information</string>
     <string name="register_type"><font size="15">Type: </font></string>
