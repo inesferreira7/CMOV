@@ -8,8 +8,18 @@
 /build
 /captures
 .externalNativeBuild
+
+#API
 API/node_modules/*
+
+#Client app
 CLIENT/.idea/*
 CLIENT/.gradle/*
 CLIENT/local.properties
 CLIENT/app/build/*
+
+#Terminal App
+TERMINAL/.idea/*
+TERMINAL/.gradle/*
+TERMINAL/local.properties
+TERMINAL/app/build/*
