@@ -40,13 +40,13 @@ public class CafeteriaFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 //Key existence check
-                Integer quantity = order.get(Globals.Item.COFFEE);
+                Integer quantity = order.get(Globals.Item.Coffee);
                 if(quantity == null) {
-                    order.put(Globals.Item.COFFEE, 1);
+                    order.put(Globals.Item.Coffee, 1);
                     Log.e("oi", order.toString());
                 }
                 else {
-                    order.put(Globals.Item.COFFEE, quantity+1); //override
+                    order.put(Globals.Item.Coffee, quantity+1); //override
                     Log.e("new", order.toString());
                 }
 
@@ -58,13 +58,13 @@ public class CafeteriaFragment extends Fragment{
         soda_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer quantity = order.get(Globals.Item.SODA);
+                Integer quantity = order.get(Globals.Item.Soda);
                 if(quantity == null) {
-                    order.put(Globals.Item.SODA, 1);
+                    order.put(Globals.Item.Soda, 1);
                     Log.e("oi", order.toString());
                 }
                 else {
-                    order.put(Globals.Item.SODA, quantity+1); //override
+                    order.put(Globals.Item.Soda, quantity+1); //override
                     Log.e("new", order.toString());
                 }
                 order_adapter.updateList(order);
@@ -75,13 +75,13 @@ public class CafeteriaFragment extends Fragment{
         popcorn_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer quantity = order.get(Globals.Item.POPCORN);
+                Integer quantity = order.get(Globals.Item.Popcorn);
                 if(quantity == null) {
-                    order.put(Globals.Item.POPCORN, 1);
+                    order.put(Globals.Item.Popcorn, 1);
                     Log.e("oi", order.toString());
                 }
                 else {
-                    order.put(Globals.Item.POPCORN, quantity+1); //override
+                    order.put(Globals.Item.Popcorn, quantity+1); //override
                     Log.e("new", order.toString());
                 }
 
@@ -93,13 +93,13 @@ public class CafeteriaFragment extends Fragment{
         sandwich_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer quantity = order.get(Globals.Item.SANDWICH);
+                Integer quantity = order.get(Globals.Item.Sandwich);
                 if(quantity == null) {
-                    order.put(Globals.Item.SANDWICH, 1);
+                    order.put(Globals.Item.Sandwich, 1);
                     Log.e("oi", order.toString());
                 }
                 else {
-                    order.put(Globals.Item.SANDWICH, quantity+1); //override
+                    order.put(Globals.Item.Sandwich, quantity+1); //override
                     Log.e("new", order.toString());
                 }
 

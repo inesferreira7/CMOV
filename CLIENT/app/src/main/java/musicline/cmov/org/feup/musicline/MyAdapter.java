@@ -1,5 +1,6 @@
 package musicline.cmov.org.feup.musicline;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,8 +59,8 @@ public class MyAdapter extends BaseAdapter{
         if(item.getValue() > 0) {
             result.setVisibility(View.VISIBLE);
             */
-            ((TextView) result.findViewById(R.id.order_product)).setText(item.getKey().toString());
-            ((TextView) result.findViewById(R.id.order_quantity)).setText(item.getValue().toString());
+            ((TextView) result.findViewById(R.id.order_product)).setTextColor(Color.parseColor("#263238"));
+            ((TextView) result.findViewById(R.id.order_product)).setText(item.getValue().toString() + " x    " + item.getKey().toString());
             /*
         }
         else{
