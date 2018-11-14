@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:weightSum="10"
+    android:weightSum="12"
     tools:context=".CafeteriaFragment">
 
     <RelativeLayout
@@ -205,6 +205,12 @@
 
 
     </GridLayout>
+
+    <ListView
+        android:id="@+id/order_list"
+        android:layout_width="match_parent"
+        android:layout_weight="5"
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>
