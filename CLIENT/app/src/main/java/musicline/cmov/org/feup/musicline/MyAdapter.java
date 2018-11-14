@@ -1,6 +1,7 @@
 package musicline.cmov.org.feup.musicline;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,7 @@ public class MyAdapter extends BaseAdapter{
             result.setVisibility(View.VISIBLE);
             */
             ((TextView) result.findViewById(R.id.order_product)).setTextColor(Color.parseColor("#263238"));
+            ((TextView) result.findViewById(R.id.order_product)).setTypeface(Typeface.DEFAULT_BOLD);
             ((TextView) result.findViewById(R.id.order_product)).setText(item.getValue().toString() + " x    " + item.getKey().toString());
             /*
         }
