@@ -30,7 +30,6 @@ public class ShowsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shows, container, false);
 
         shows = new JSONArray();
-
         listShows(shows);
 
         return view;

@@ -56,18 +56,9 @@ public class MyAdapter extends BaseAdapter{
 
         Map.Entry<Globals.Item, Integer> item = getItem(position);
 
-        /*
-        if(item.getValue() > 0) {
-            result.setVisibility(View.VISIBLE);
-            */
             ((TextView) result.findViewById(R.id.order_product)).setTextColor(Color.parseColor("#263238"));
             ((TextView) result.findViewById(R.id.order_product)).setTypeface(Typeface.DEFAULT_BOLD);
             ((TextView) result.findViewById(R.id.order_product)).setText(item.getValue().toString() + " x    " + item.getKey().toString());
-            /*
-        }
-        else{
-            result.setVisibility(View.GONE);
-        }*/
 
         return result;
     }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="11"
+    android:weightSum="12"
     tools:context=".CafeteriaFragment">
 
     <RelativeLayout
@@ -215,7 +215,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="2.5"
         android:layout_marginLeft="24dp">
 
         <ListView
@@ -231,12 +231,18 @@
             android:layout_height="match_parent" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/submit_order"
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:text="@string/register_button"/>
+        android:layout_marginLeft="24dp"
+        android:layout_weight="1">
+
+    <TextView
+        android:id="@+id/order_total"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    </RelativeLayout>
 
 
 
