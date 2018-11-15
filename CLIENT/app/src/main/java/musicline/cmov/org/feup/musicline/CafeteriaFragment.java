@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -18,9 +19,10 @@ public class CafeteriaFragment extends Fragment{
 
     HashMap<Globals.Item, Integer> order;
     CardView coffee_card, soda_card, popcorn_card, sandwich_card;
-    public CafeteriaFragment() {
-        // Required empty public constructor
-    }
+
+    ListView order_list;
+    MyAdapter order_adapter;
+    public CafeteriaFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,37 +30,44 @@ public class CafeteriaFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_cafeteria, container, false);
         order = new HashMap<>();
+        order_list = (ListView) view.findViewById(R.id.order_list);
+        order_adapter = new MyAdapter(order);
+        order_list.setAdapter(order_adapter);
 
         coffee_card = (CardView) view.findViewById(R.id.coffee_card);
+
         coffee_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Key existence check
-                Integer quantity = order.get(Globals.Item.COFFEE);
+                Integer quantity = order.get(Globals.Item.Coffee);
                 if(quantity == null) {
-                    order.put(Globals.Item.COFFEE, 1);
+                    order.put(Globals.Item.Coffee, 1);
                     Log.e("oi", order.toString());
                 }
                 else {
-                    order.put(Globals.Item.COFFEE, quantity+1); //override
+                    order.put(Globals.Item.Coffee, quantity+1); //override
                     Log.e("new", order.toString());
                 }
+
+                order_adapter.updateList(order);
             }
-        });
+            });
 
         soda_card = (CardView) view.findViewById(R.id.soda_card);
         soda_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer quantity = order.get(Globals.Item.SODA);
+                Integer quantity = order.get(Globals.Item.Soda);
                 if(quantity == null) {
-                    order.put(Globals.Item.SODA, 1);
+                    order.put(Globals.Item.Soda, 1);
                     Log.e("oi", order.toString());
                 }
                 else {
-                    order.put(Globals.Item.SODA, quantity+1); //override
+                    order.put(Globals.Item.Soda, quantity+1); //override
                     Log.e("new", order.toString());
                 }
+                order_adapter.updateList(order);
             }
         });
 
@@ -66,15 +75,17 @@ public class CafeteriaFragment extends Fragment{
         popcorn_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer quantity = order.get(Globals.Item.POPCORN);
+                Integer quantity = order.get(Globals.Item.Popcorn);
                 if(quantity == null) {
-                    order.put(Globals.Item.POPCORN, 1);
+                    order.put(Globals.Item.Popcorn, 1);
                     Log.e("oi", order.toString());
                 }
                 else {
-                    order.put(Globals.Item.POPCORN, quantity+1); //override
+                    order.put(Globals.Item.Popcorn, quantity+1); //override
                     Log.e("new", order.toString());
                 }
+
+                order_adapter.updateList(order);
             }
         });
 
@@ -82,15 +93,17 @@ public class CafeteriaFragment extends Fragment{
         sandwich_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer quantity = order.get(Globals.Item.SANDWICH);
+                Integer quantity = order.get(Globals.Item.Sandwich);
                 if(quantity == null) {
-                    order.put(Globals.Item.SANDWICH, 1);
+                    order.put(Globals.Item.Sandwich, 1);
                     Log.e("oi", order.toString());
                 }
                 else {
-                    order.put(Globals.Item.SANDWICH, quantity+1); //override
+                    order.put(Globals.Item.Sandwich, quantity+1); //override
                     Log.e("new", order.toString());
                 }
+
+                order_adapter.updateList(order);
             }
         });
 
