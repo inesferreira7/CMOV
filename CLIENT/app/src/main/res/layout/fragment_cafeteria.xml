@@ -205,18 +205,18 @@
     </GridLayout>
 
     <View
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="#c0c0c0"/>
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#c0c0c0" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.5"
-        android:layout_marginLeft="24dp">
+        android:layout_marginLeft="24dp"
+        android:layout_weight="2.5">
 
         <ListView
             android:id="@+id/order_list"
@@ -231,18 +231,33 @@
             android:layout_height="match_parent" />
     </RelativeLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginLeft="24dp"
-        android:layout_weight="1">
+        android:layout_weight="0.5">
 
-    <TextView
-        android:id="@+id/order_total"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/order_total"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/addVouchers_button"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/addVouchers_button" />
+    <Button
+        android:id="@+id/order_button"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/order_button" />
+
+
+
 
 
 
