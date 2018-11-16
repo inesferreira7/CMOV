@@ -5,8 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".ShowsFragment">
 
-    <TextView
+    <ListView
+        android:id="@+id/list_shows"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/default_shows" />
+        android:layout_height="wrap_content">
+    </ListView>
 </FrameLayout>

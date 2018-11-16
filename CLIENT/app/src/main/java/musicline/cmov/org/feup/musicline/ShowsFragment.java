@@ -1,12 +1,18 @@
 package musicline.cmov.org.feup.musicline;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,6 +38,8 @@ import musicline.cmov.org.feup.musicline.utils.Show;
 public class ShowsFragment extends Fragment {
 
     List<Show> shows = new ArrayList<>();
+    ArrayAdapter<Show> show_adapter;
+    ListView list_shows;
 
     public ShowsFragment() { }
 
@@ -40,6 +48,10 @@ public class ShowsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shows, container, false);
 
         listShows(shows);
+        Log.e("shows", shows.toString());
+
+        list_shows = (ListView)view.findViewById(R.id.list_shows);
+        show_adapter = new ShowAdapter();
 
         return view;
     }
@@ -63,12 +75,14 @@ public class ShowsFragment extends Fragment {
                         );
 
                         shows.add(s);
+                        Log.e("SHOOOOWS", shows.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
                 Log.i("SHOWS", shows.toString());
+                onSuccess(shows);
             }
         },
                 new Response.ErrorListener() {
@@ -79,5 +93,33 @@ public class ShowsFragment extends Fragment {
                 });
 
         queue.add(request);
+    }
+
+    private void onSuccess(List<Show> shows){
+
+        list_shows.setAdapter(show_adapter);
+
+    }
+
+    private class ShowAdapter extends ArrayAdapter<Show> {
+
+        ShowAdapter(){super(ShowsFragment.this.getContext(), R.layout.show_adapter, shows);}
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+            View row = convertView;
+            if (row == null) {
+                LayoutInflater inflater = getLayoutInflater();
+                row = inflater.inflate(R.layout.show_adapter, parent, false);
+            }
+
+            Show s = shows.get(position);
+            ((TextView)row.findViewById(R.id.show_title)).setText(s.getName());
+            ((TextView)row.findViewById(R.id.show_date)).setText(s.getDate());
+
+            return row;
+        }
     }
 }
