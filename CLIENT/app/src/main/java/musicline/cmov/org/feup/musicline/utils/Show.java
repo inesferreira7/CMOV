@@ -4,15 +4,21 @@ import java.util.Date;
 
 public class Show {
 
+    String id;
     String name;
-    Date date;
+    String date;
     Number ticketPrice;
 
-    public Show(String name, Date date, Number ticketPrice) {
+    public Show(String id, String name, String date, Number ticketPrice) {
+        this.id = id;
         this.name = name;
         this.date = date;
         this.ticketPrice = ticketPrice;
     }
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
 
     public String getName() {
         return name;
@@ -22,13 +28,11 @@ public class Show {
         this.name = name;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+    public void setDate(String date) { this.date = date; }
 
     public Number getTicketPrice() {
         return ticketPrice;

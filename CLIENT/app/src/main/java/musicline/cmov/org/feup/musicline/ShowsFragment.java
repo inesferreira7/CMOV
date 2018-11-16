@@ -16,33 +16,59 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import musicline.cmov.org.feup.musicline.utils.Show;
 
 public class ShowsFragment extends Fragment {
 
-    JSONArray shows;
+    List<Show> shows = new ArrayList<>();
 
-    public ShowsFragment() {
-        // Required empty public constructor
-    }
+    public ShowsFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shows, container, false);
 
-        shows = new JSONArray();
         listShows(shows);
 
         return view;
     }
 
-    private void listShows(final JSONArray showList) {
+    private void listShows(final List<Show> shows) {
         RequestQueue queue = Volley.newRequestQueue(this.getContext());
         String url = Globals.URL + "/performances";
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, showList, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.i("Response", response.toString());
+                for(int i = 0; i < response.length(); i++){
+                    try {
+                        JSONObject show = (JSONObject) response.get(i);
+
+                        Show s = new Show(
+                                show.getString("_id"),
+                                show.getString("name"),
+                                show.getString("date"),
+                                show.getInt("ticketPrice")
+                        );
+
+                        shows.add(s);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                Log.i("SHOWS", shows.toString());
             }
         },
                 new Response.ErrorListener() {
@@ -54,5 +80,4 @@ public class ShowsFragment extends Fragment {
 
         queue.add(request);
     }
-
 }
