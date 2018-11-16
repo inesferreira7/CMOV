@@ -23,7 +23,7 @@ exports.getAllPerformances = (req, res) => {
 exports.createPerformance = (req, res) => {
     var performance = new Performance({
         name: req.body.name,
-        date: req.body.date,
+        date_string: req.body.date_string,
         ticketPrice: req.body.ticketPrice
     });
 
