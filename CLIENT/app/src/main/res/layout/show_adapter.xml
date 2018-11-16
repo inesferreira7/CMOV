@@ -6,6 +6,7 @@
     android:padding="4dp">
 
     <ImageView
+        android:layout_marginLeft="8dp"
         android:id="@+id/show_icon"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -16,10 +17,12 @@
         android:padding="10dp" />
 
     <LinearLayout
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/show_icon"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp">
 
         <TextView
             android:id="@+id/show_title"
@@ -28,7 +31,9 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textStyle="bold" />
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"/>
 
         <TextView
             android:id="@+id/show_day"
