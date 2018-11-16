@@ -1,7 +1,5 @@
 package musicline.cmov.org.feup.musicline.utils;
 
-import java.util.Date;
-
 public class Show {
 
     String id;
