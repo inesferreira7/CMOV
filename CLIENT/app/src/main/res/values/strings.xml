@@ -45,8 +45,9 @@
     <string name="addVouchers_button">Add vouchers</string>
     <string name="order_button">Order</string>
 
+    <!--Shows string -->
+    <string name="next_shows">Next shows</string>
 
-    <string name="default_shows">Hello shows</string>
     <string name="default_tickets">Hello tickets</string>
     <string name="default_vouchers">Hello vouchers</string>
 
