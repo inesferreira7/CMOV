@@ -83,8 +83,49 @@ public class ShowActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.e("quantidade" , actual_quantity);
                 buyTickets(show);
+                createVoucher();
             }
         });
+    }
+
+    public void createVoucher() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Globals.URL + "/voucher";
+        SharedPreferences prefs = this.getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE);
+
+        JSONObject body = new JSONObject();
+        Random rand = new Random();
+        int type = rand.nextInt(1) + 0;
+        String type_string = new String();
+
+        if (type == 0) {
+            type_string = "Coffee";
+        } else if(type == 1){
+            type_string = "Popcorn";
+        }
+
+        try {
+            body.put("customerId", prefs.getString("uuid", ""));
+            body.put("type", type_string);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject voucher) {
+                        Log.i("Voucher", voucher.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley error", error.toString());
+                    }
+                });
+
+        queue.add(request);
     }
 
     public void buyTickets(Show show) {
@@ -142,8 +183,6 @@ public class ShowActivity extends AppCompatActivity {
                         String json = gson.toJson(ticket_list);
                         editor.putString("tickets", json);
                         editor.apply();
-
-                        //TODO Voltar para a lista de shows
                     }
                 },
                 new Response.ErrorListener() {

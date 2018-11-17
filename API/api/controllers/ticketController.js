@@ -13,8 +13,6 @@ exports.buyTickets = (req, res) => {
     var tickets = new Array();
     const quantity = req.body[0].quantity;
 
-    console.log(req.body);
-
     for (var i = 0; i < quantity; i++) {
         var ticket = new Ticket({
             performanceName: req.body[0].performanceName,

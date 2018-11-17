@@ -32,14 +32,13 @@ exports.getAllUnusedVouchers = (req, res) => {
 };
 
 exports.createVoucher = (req, res) => {
-    var voucher = {
-        customerId: req.params.customerId,
-        isUsed: req.params.isUsed,
-        description: req.params.description
-    }
+    var voucher = new Voucher({
+        customerId: req.body.customerId,
+        type: req.body.type
+    });
 
     voucher.save((err, data) => {
         if (err) res.status(500).send(err);
-        res.status(200).send();
+        res.status(200).send(data);
     });
 };

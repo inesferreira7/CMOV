@@ -10,11 +10,11 @@ var VoucherSchema = new Schema({
     },
     isUsed: {
         type: Boolean,
-        required: true,
         default: false
     },
-    description: {
+    type: {
         type: String,
+        enum: ['Coffee', 'Soda', 'Sandwich', "Popcorn", "5%"],
         required: true
     }
 });
