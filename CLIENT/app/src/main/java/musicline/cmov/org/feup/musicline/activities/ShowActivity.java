@@ -20,18 +20,22 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import musicline.cmov.org.feup.musicline.R;
 import musicline.cmov.org.feup.musicline.objects.Show;
+import musicline.cmov.org.feup.musicline.objects.Voucher;
 import musicline.cmov.org.feup.musicline.utils.Globals;
 import musicline.cmov.org.feup.musicline.utils.Ticket;
 
@@ -68,12 +72,6 @@ public class ShowActivity extends AppCompatActivity {
         total_price = (TextView)findViewById(R.id.total_price_info);
         total_price.setText("   " + show.getTicketPrice().toString() + "€");
 
-        description = (TextView)findViewById(R.id.show_description);
-        description.setText(show.getDescription());
-        description.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
-
-        place = (TextView)findViewById(R.id.place_info);
-        place.setText("   " + show.getPlace());
 
         quantity_tickets = (ElegantNumberButton)findViewById(R.id.ticket_button);
         quantity_tickets.setOnClickListener(new ElegantNumberButton.OnClickListener() {
@@ -88,27 +86,33 @@ public class ShowActivity extends AppCompatActivity {
         buy_tickets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("quantidade" , actual_quantity);
                 buyTickets(show);
-                createVoucher();
+                createVoucher(false);
+                if(Integer.parseInt(actual_quantity) * show.getTicketPrice().intValue() % 100 == 0){
+                    createVoucher(true);
+                }
             }
         });
     }
 
-    public void createVoucher() {
+    public void createVoucher(boolean discount) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Globals.URL + "/voucher";
-        SharedPreferences prefs = this.getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE);
+        final SharedPreferences prefs = this.getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE);
 
         JSONObject body = new JSONObject();
         Random rand = new Random();
         int type = rand.nextInt(1) + 0;
         String type_string = new String();
 
+        if(discount) type = 2;
+
         if (type == 0) {
             type_string = "Coffee";
         } else if(type == 1){
             type_string = "Popcorn";
+        } else if(type == 2){
+            type_string = "5%";
         }
 
         try {
@@ -122,7 +126,34 @@ public class ShowActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject voucher) {
-                        Log.i("Voucher", voucher.toString());
+                        String json = prefs.getString("vouchers", null);
+                        Gson gson = new Gson();
+                        Type type = new TypeToken<ArrayList<Voucher>>() {}.getType();
+                        List<Voucher> vouchers;
+
+                        if (json != null){
+                            vouchers = gson.fromJson(json, type);
+                        } else {
+                            vouchers = new ArrayList<>();
+                        }
+
+                        try {
+                            Voucher v = new Voucher(
+                                    voucher.getString("_id"),
+                                    voucher.getString("customerId"),
+                                    voucher.getString("type"),
+                                    voucher.getBoolean("isUsed")
+                            );
+
+                            vouchers.add(v);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        SharedPreferences.Editor editor = getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE).edit();
+                        json = gson.toJson(vouchers);
+                        editor.putString("vouchers", json);
+                        editor.apply();
                     }
                 },
                 new Response.ErrorListener() {
@@ -164,13 +195,12 @@ public class ShowActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray tickets) {
-                        Log.i("Ticket response", tickets.toString());
-
                         for(int i = 0; i < tickets.length(); i++){
                             try {
                                 JSONObject t = (JSONObject) tickets.get(i);
 
                                 Ticket ticket = new Ticket(
+                                        t.getString("_id"),
                                         t.getString("performanceName"),
                                         t.getString("performanceDate"),
                                         t.getString("performanceId"),
