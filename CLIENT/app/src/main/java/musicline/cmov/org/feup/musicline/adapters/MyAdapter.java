@@ -1,4 +1,4 @@
-package musicline.cmov.org.feup.musicline;
+package musicline.cmov.org.feup.musicline.adapters;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,6 +11,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import musicline.cmov.org.feup.musicline.R;
+import musicline.cmov.org.feup.musicline.objects.Show;
+import musicline.cmov.org.feup.musicline.utils.Globals;
 
 public class MyAdapter extends BaseAdapter{
 

@@ -1,10 +1,12 @@
-package musicline.cmov.org.feup.musicline;
+package musicline.cmov.org.feup.musicline.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import musicline.cmov.org.feup.musicline.R;
 
 public class MyVouchersFragment extends Fragment {
 

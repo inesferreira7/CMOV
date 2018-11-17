@@ -1,13 +1,10 @@
-package musicline.cmov.org.feup.musicline;
+package musicline.cmov.org.feup.musicline.fragments;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +26,15 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import musicline.cmov.org.feup.musicline.utils.Show;
+import musicline.cmov.org.feup.musicline.R;
+import musicline.cmov.org.feup.musicline.activities.ShowActivity;
+import musicline.cmov.org.feup.musicline.objects.Show;
+import musicline.cmov.org.feup.musicline.utils.Globals;
 
 public class ShowsFragment extends Fragment implements AdapterView.OnItemClickListener {
 

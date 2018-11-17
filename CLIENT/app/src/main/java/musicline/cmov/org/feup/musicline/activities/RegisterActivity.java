@@ -1,9 +1,7 @@
-package musicline.cmov.org.feup.musicline;
+package musicline.cmov.org.feup.musicline.activities;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.security.KeyPairGeneratorSpec;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,13 +17,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationHolder;
@@ -33,18 +29,12 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.custom.CustomErrorReset;
 import com.basgeekball.awesomevalidation.utility.custom.CustomValidation;
 import com.basgeekball.awesomevalidation.utility.custom.CustomValidationCallback;
-import com.google.common.collect.Range;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -52,23 +42,27 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.CertificateException;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.security.auth.x500.X500Principal;
 
+import musicline.cmov.org.feup.musicline.R;
+import musicline.cmov.org.feup.musicline.utils.Globals;
+
+/**
+ * User needs to register in order to access the application. The first time he uses
+ * the application needs to enter some personal and credit card information.
+ */
+
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText name, username, email, password, confirmPassword, nif, cardNumber, cardValidity;
+    EditText name,  email, nif, cardNumber, cardValidity;
     Button register;
     AwesomeValidation validation;
     RadioGroup type;
     RadioButton type_chosen;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
         updateUI();
     }
 
-    //Handling validation of card validity
+    //Handling dynamically validation of card validity
+
     TextWatcher validityWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -90,15 +85,18 @@ public class RegisterActivity extends AppCompatActivity {
             String working = s.toString();
             boolean isValid = true;
             if (working.length() == 2 && before == 0) {
+
+                //a month is valid if between 1 and 12
                 if (Integer.parseInt(working) < 1 || Integer.parseInt(working) > 12) {
                     isValid = false;
                 } else {
-                    working += "/";
+                    working += "/"; //when a valid month is inserted, it adds a "/"
                     cardValidity.setText(working);
                     cardValidity.setSelection(working.length());
                 }
             } else if (working.length() == 5 && before == 0) {
                 String year = working.substring(3);
+                //years before 2018 are not valid
                 if (Integer.parseInt(year) < 18) {
                     isValid = false;
                 }
@@ -116,7 +114,13 @@ public class RegisterActivity extends AppCompatActivity {
         public void afterTextChanged(Editable editable) { }
     };
 
+    /**
+     * Responsible for validation handling - filled fields, check option, comparison
+     * with regex expressions
+     */
+
     private void updateUI() {
+
         name = (EditText) findViewById(R.id.register_name);
         email = (EditText) findViewById(R.id.register_email);
         nif = (EditText) findViewById(R.id.register_nif);
@@ -126,10 +130,16 @@ public class RegisterActivity extends AppCompatActivity {
         cardValidity = (EditText) findViewById(R.id.register_cardValidity);
         cardValidity.addTextChangedListener(validityWatcher);
 
-        //Validation area
+        //Name entry accepts only letters and spaces
         validation.addValidation(RegisterActivity.this, R.id.register_name, "[a-zA-Z\\s]+", R.string.error_name);
+
+        //E-mail address validation made with Java class Patterns
         validation.addValidation(RegisterActivity.this, R.id.register_email, Patterns.EMAIL_ADDRESS, R.string.error_email);
+
+        //NIF entry accepts only 9 numeric characters (Portuguese pattern)
         validation.addValidation(RegisterActivity.this, R.id.register_nif, "^\\d{9}$", R.string.error_nif);
+
+        //Forbids user register if none option was chosen
         validation.addValidation(RegisterActivity.this, R.id.register_cardType, new CustomValidation() {
             @Override
             public boolean compare(ValidationHolder validationHolder) {
@@ -153,6 +163,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }, R.string.error_type);
 
+
+        //Card number needs to be composed by 16 numeric characters
         validation.addValidation(RegisterActivity.this, R.id.register_cardNumber, "^\\d{16}$", R.string.error_cardNumber);
 
 
@@ -162,6 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
                 int selectedId = type.getCheckedRadioButtonId();
                 type_chosen = (RadioButton)findViewById(selectedId);
 
+                //If fields are field properly
                 if (validation.validate()) {
                     Toast.makeText(RegisterActivity.this, "Data received successfully!", Toast.LENGTH_SHORT).show();
                     try {
@@ -178,7 +191,7 @@ public class RegisterActivity extends AppCompatActivity {
                             credit_card.put("card_number", cardNumber.getText().toString());
                             credit_card.put("validity", cardValidity.getText().toString());
                             customer.put("credit_card", credit_card);
-                            customer.put("key", byteToString(public_key.getEncoded()));
+                            customer.put("key", Globals.byteToString(public_key.getEncoded()));
 
                             registerCustomer(customer);
                         }
@@ -192,6 +205,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Generates a cryptographic RSA key pair
+     * @return KeyPair
+     */
 
     private KeyPair generateKeyPair() {
         KeyStore keystore = null;
@@ -231,15 +249,11 @@ public class RegisterActivity extends AppCompatActivity {
         return null;
     }
 
-    private String byteToString(byte[] array){
-        String array_string = new String();
-
-        for(int i = 0; i < array.length; i++) {
-            array_string += Integer.toString(array[i]);
-        }
-
-        return array_string;
-    }
+    /**
+     * Register user
+     * On sucess, a unique user id (uuid) is returned to the app and stored locally
+     * @param customer
+     */
 
     private void registerCustomer(final JSONObject customer) {
         RequestQueue queue = Volley.newRequestQueue(this);

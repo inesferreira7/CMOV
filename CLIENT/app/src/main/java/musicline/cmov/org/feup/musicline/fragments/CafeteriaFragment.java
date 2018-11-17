@@ -1,9 +1,7 @@
-package musicline.cmov.org.feup.musicline;
+package musicline.cmov.org.feup.musicline.fragments;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -12,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,9 +24,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import musicline.cmov.org.feup.musicline.adapters.MyAdapter;
+import musicline.cmov.org.feup.musicline.R;
+import musicline.cmov.org.feup.musicline.objects.Show;
+import musicline.cmov.org.feup.musicline.utils.Globals;
 
 import static android.content.Context.MODE_PRIVATE;
 

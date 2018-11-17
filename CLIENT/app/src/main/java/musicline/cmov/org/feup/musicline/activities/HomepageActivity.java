@@ -1,10 +1,7 @@
-package musicline.cmov.org.feup.musicline;
+package musicline.cmov.org.feup.musicline.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import musicline.cmov.org.feup.musicline.fragments.MyTicketsFragment;
+import musicline.cmov.org.feup.musicline.fragments.MyVouchersFragment;
+import musicline.cmov.org.feup.musicline.R;
+import musicline.cmov.org.feup.musicline.fragments.ShowsFragment;
+import musicline.cmov.org.feup.musicline.fragments.CafeteriaFragment;
 
 public class HomepageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

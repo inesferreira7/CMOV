@@ -1,4 +1,4 @@
-package musicline.cmov.org.feup.musicline;
+package musicline.cmov.org.feup.musicline.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +10,8 @@ import android.widget.TextView;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
-import org.w3c.dom.Text;
-
-import musicline.cmov.org.feup.musicline.utils.Show;
+import musicline.cmov.org.feup.musicline.R;
+import musicline.cmov.org.feup.musicline.objects.Show;
 
 public class ShowActivity extends AppCompatActivity {
 

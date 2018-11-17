@@ -1,6 +1,7 @@
-package musicline.cmov.org.feup.musicline.utils;
+package musicline.cmov.org.feup.musicline.objects;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 public class Show implements Serializable{
 
@@ -57,4 +58,5 @@ public class Show implements Serializable{
     public void setPlace(String place) {
         this.place = place;
     }
+
 }
