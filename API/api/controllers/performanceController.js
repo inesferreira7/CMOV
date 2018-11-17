@@ -24,6 +24,7 @@ exports.createPerformance = (req, res) => {
     var performance = new Performance({
         name: req.body.name,
         description: req.body.description,
+        place: req.body.place,
         date_string: req.body.date_string,
         ticketPrice: req.body.ticketPrice
     });

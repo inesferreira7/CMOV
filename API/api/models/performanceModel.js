@@ -12,6 +12,10 @@ var PerformanceSchema = new Schema({
         type: String,
         required: true
     },
+    place: {
+        type: String,
+        required: true
+    },
     date_string: {
         type: String,
         required: true
