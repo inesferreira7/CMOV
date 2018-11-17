@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +105,7 @@ public class ShowsFragment extends Fragment implements AdapterView.OnItemClickLi
         Show s = shows.get(i);
 
         Intent intent = new Intent(getActivity(), ShowActivity.class);
+        intent.putExtra("Show", (Serializable) s);
         startActivity(intent);
 
     }

@@ -1,6 +1,8 @@
 package musicline.cmov.org.feup.musicline.utils;
 
-public class Show {
+import java.io.Serializable;
+
+public class Show implements Serializable{
 
     String id;
     String name;
