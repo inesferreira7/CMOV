@@ -1,10 +1,13 @@
 package musicline.cmov.org.feup.musicline;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -38,6 +42,7 @@ public class ShowsFragment extends Fragment implements AdapterView.OnItemClickLi
     List<Show> shows = new ArrayList<>();
     ArrayAdapter<Show> show_adapter;
     ListView list_shows;
+    private ProgressBar spinner;
 
     public ShowsFragment() { }
 
@@ -51,6 +56,8 @@ public class ShowsFragment extends Fragment implements AdapterView.OnItemClickLi
         list_shows = (ListView)view.findViewById(R.id.list_shows);
         show_adapter = new ShowAdapter();
         list_shows.setOnItemClickListener(this);
+
+        spinner = (ProgressBar)view.findViewById(R.id.progress_shows);
 
         return view;
     }
@@ -97,9 +104,8 @@ public class ShowsFragment extends Fragment implements AdapterView.OnItemClickLi
     }
 
     private void onSuccess(List<Show> shows){
-
+        spinner.setVisibility(View.GONE);
         list_shows.setAdapter(show_adapter);
-
     }
 
     @Override
