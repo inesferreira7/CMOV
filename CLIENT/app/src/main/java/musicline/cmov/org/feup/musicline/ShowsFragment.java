@@ -1,7 +1,6 @@
 package musicline.cmov.org.feup.musicline;
 
-
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,18 +25,15 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import musicline.cmov.org.feup.musicline.utils.Show;
 
-public class ShowsFragment extends Fragment {
+public class ShowsFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     List<Show> shows = new ArrayList<>();
     ArrayAdapter<Show> show_adapter;
@@ -52,6 +50,7 @@ public class ShowsFragment extends Fragment {
 
         list_shows = (ListView)view.findViewById(R.id.list_shows);
         show_adapter = new ShowAdapter();
+        list_shows.setOnItemClickListener(this);
 
         return view;
     }
@@ -101,6 +100,16 @@ public class ShowsFragment extends Fragment {
 
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Show s = shows.get(i);
+
+        Intent intent = new Intent(getActivity(), ShowActivity.class);
+        intent.putExtra("Show", (Serializable) s);
+        startActivity(intent);
+
+    }
+
     private class ShowAdapter extends ArrayAdapter<Show> {
 
         ShowAdapter(){super(ShowsFragment.this.getContext(), R.layout.show_adapter, shows);}
@@ -117,9 +126,12 @@ public class ShowsFragment extends Fragment {
 
             Show s = shows.get(position);
             ((TextView)row.findViewById(R.id.show_title)).setText(s.getName());
-            ((TextView)row.findViewById(R.id.show_date)).setText(s.getDate());
-
-            return row;
+            ((TextView)row.findViewById(R.id.show_day)).setText("Dia");
+            ((TextView)row.findViewById(R.id.show_hour)).setText("Hora");
+            ((TextView)row.findViewById(R.id.show_price)).setText(String.valueOf(s.getTicketPrice()));
+            ImageView icon = row.findViewById(R.id.show_icon);
+            icon.setImageResource(R.drawable.show_icon);
+            return (row);
         }
     }
 }
