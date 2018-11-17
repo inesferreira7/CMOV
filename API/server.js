@@ -15,6 +15,8 @@ app.use(bodyParser.json());
 require('./api/routes/customerRoutes')(app);
 require('./api/routes/performanceRoutes')(app);
 require('./api/routes/ticketRoutes')(app);
+require('./api/routes/voucherRoutes')(app);
+require('./api/routes/orderRoutes')(app);
 
 app.listen(port);
 

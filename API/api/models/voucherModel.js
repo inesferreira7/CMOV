@@ -10,7 +10,8 @@ var VoucherSchema = new Schema({
     },
     isUsed: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     },
     description: {
         type: String,
