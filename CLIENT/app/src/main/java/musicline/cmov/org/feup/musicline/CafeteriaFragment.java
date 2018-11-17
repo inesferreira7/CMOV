@@ -1,6 +1,7 @@
 package musicline.cmov.org.feup.musicline;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,12 +11,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Map;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class CafeteriaFragment extends Fragment{
 
@@ -25,6 +41,7 @@ public class CafeteriaFragment extends Fragment{
     MyAdapter order_adapter;
     double order_total;
     TextView order_total_text;
+    Button create_order;
 
     public CafeteriaFragment() { }
 
@@ -124,6 +141,70 @@ public class CafeteriaFragment extends Fragment{
             }
         });
 
+        create_order = (Button) view.findViewById(R.id.order_button);
+        create_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newOrder();
+            }
+        });
+
         return view;
     }
+
+    public void newOrder(){
+        RequestQueue queue = Volley.newRequestQueue(this.getContext());
+        String url = Globals.URL + "/order";
+        SharedPreferences prefs = this.getContext().getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE);
+
+        JSONObject body = new JSONObject();
+
+        try {
+            JSONArray products = getOrderProducts();
+
+            body.put("customerId", prefs.getString("uuid", ""));
+            body.put("products", products);
+            body.put("vouchers", new JSONArray());
+            body.put("totalPrice", order_total);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("Order response", response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley error", error.toString());
+                    }
+                });
+
+        queue.add(request);
+    }
+
+    public JSONArray getOrderProducts(){
+        JSONArray products = new JSONArray();
+
+        for(Map.Entry<Globals.Item, Integer> entry : this.order.entrySet()) {
+            Globals.Item item = entry.getKey();
+            int quantity = entry.getValue();
+
+            JSONObject order_item = new JSONObject();
+            try {
+                order_item.put("product", item);
+                order_item.put("quantity", quantity);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            products.put(order_item);
+        }
+
+        return products;
+    }
+
 }

@@ -20,14 +20,14 @@ exports.getOrder = (req, res) => {
 };
 
 exports.createOrder = (req, res) => {
-    var order = {
-        customerId: req.params.customerId,
-        products: req.params.products,
-        vouchers: req.params.vouchers,
-        totalPrice: req.params.totalPrice
-    }
+    var order = new Order({
+        customerId: req.body.customerId,
+        products: req.body.products,
+        vouchers: req.body.vouchers,
+        totalPrice: req.body.totalPrice
+    });
 
-    order.save((err, data) => {
+    order.save((err) => {
         if (err) res.status(500).send(err);
         res.status(200).send();
     });
