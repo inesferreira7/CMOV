@@ -1,6 +1,7 @@
 package musicline.cmov.org.feup.musicline.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +37,8 @@ import musicline.cmov.org.feup.musicline.activities.ShowActivity;
 import musicline.cmov.org.feup.musicline.objects.Show;
 import musicline.cmov.org.feup.musicline.utils.Globals;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ShowsFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     List<Show> shows = new ArrayList<>();
@@ -50,7 +53,6 @@ public class ShowsFragment extends Fragment implements AdapterView.OnItemClickLi
         View view = inflater.inflate(R.layout.fragment_shows, container, false);
 
         listShows(shows);
-        Log.e("shows", shows.toString());
 
         list_shows = (ListView)view.findViewById(R.id.list_shows);
         show_adapter = new ShowAdapter();
@@ -82,13 +84,11 @@ public class ShowsFragment extends Fragment implements AdapterView.OnItemClickLi
                         );
 
                         shows.add(s);
-                        Log.e("SHOOOOWS", shows.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
-                Log.i("SHOWS", shows.toString());
                 onSuccess(shows);
             }
         },

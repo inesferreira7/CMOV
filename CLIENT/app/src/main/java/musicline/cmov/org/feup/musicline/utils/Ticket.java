@@ -1,16 +1,25 @@
 package musicline.cmov.org.feup.musicline.utils;
 
 public class Ticket {
-    String performanceName, performanceDate, performanceId, customerId, seat;
+    String id, performanceName, performanceDate, performanceId, customerId, seat;
     boolean isUsed;
 
-    public Ticket(String performanceName, String performanceDate, String performanceId, String customerId, String seat, boolean isUsed) {
+    public Ticket(String id, String performanceName, String performanceDate, String performanceId, String customerId, String seat, boolean isUsed) {
+        this.id = id;
         this.performanceName = performanceName;
         this.performanceDate = performanceDate;
         this.performanceId = performanceId;
         this.customerId = customerId;
         this.seat = seat;
         this.isUsed = isUsed;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPerformanceName() {
