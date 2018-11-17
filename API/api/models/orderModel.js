@@ -8,11 +8,20 @@ var OrderSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
-    products: [ 
-        {
-            type: String,
-            enum: ['Coffee', 'Soda', 'Sandwich', "Popcorn"],
-            required: true
+    products: [
+        { 
+            _id: false,
+            product: { 
+                _id: false,
+                type: String,
+                enum: ['Coffee', 'Soda', 'Sandwich', "Popcorn"],
+                required: true
+            },
+            quantity: {
+                _id: false,
+                type: Number,
+                required: true
+            }
         }
     ],
     vouchers: [
@@ -27,6 +36,10 @@ var OrderSchema = new Schema({
     totalPrice: {
         type: Number,
         required: true
+    },
+    validated: {
+        type: Boolean,
+        default: false
     }
 });
 
