@@ -68,21 +68,62 @@
             android:layout_toRightOf="@+id/price_description" />
     </RelativeLayout>
 
-
-    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-        android:id="@+id/ticket_button"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="45dp"
-        android:layout_gravity="center_horizontal"
-        app:backGroundColor="@color/colorAccent"
-        app:textColor="@color/colorPrimaryDark"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/nr_tickets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:text="@string/nr_tickets" />
+
+        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+            android:id="@+id/ticket_button"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginLeft="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_toRightOf="@+id/nr_tickets"
+            app:initialNumber="1"
+            app:backGroundColor="@color/colorAccent"
+            app:textColor="@color/colorPrimaryDark"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/total_price"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/total_price_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_toRightOf="@+id/total_price"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/buyTickets_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:text="@string/buy_tickets" />
 
 </LinearLayout>

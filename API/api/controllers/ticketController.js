@@ -10,18 +10,25 @@ var mongoose = require('mongoose'),
  * If no error is encountered, decreases number of performance available tickets then sends a response with a 200 status code.
  */
 exports.buyTickets = (req, res) => {
-    var ticket = new Ticket({
-        performanceName: req.body.performanceName,
-        performanceDate: req.body.performanceDate,
-        performanceId: req.body.performanceId,
-        customerId: req.body.customerId,
-        seat: req.body.seat,
-        isUsed: false
-    });
+    var tickets = new Array();
+    const quantity = req.body.quantity;
 
-    ticket.save((err, ticket) => {
+    for (var i = 0; i < quantity; i++) {
+        var ticket = new Ticket({
+            performanceName: req.body.performanceName,
+            performanceDate: req.body.performanceDate,
+            performanceId: req.body.performanceId,
+            customerId: req.body.customerId,
+            seat: req.body.seat,
+            isUsed: false
+        });
+
+        tickets.push(ticket);
+    }
+
+    Ticket.collection.insertMany(tickets, (err, data) => {
         if(err) res.status(500).send(err);
-        res.status(200).send({uuid: ticket._id});
+        res.status(200).send({message: "done"});
     });
 };
 
