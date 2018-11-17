@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public class Show implements Serializable{
 
-    String id;
-    String name;
-    String date;
+    String id, name, description, place, date;
     Number ticketPrice;
 
-    public Show(String id, String name, String date, Number ticketPrice) {
+    public Show(String id, String name, String description, String place, String date, Number ticketPrice) {
         this.id = id;
         this.name = name;
+        this.description = description;
+        this.place = place;
         this.date = date;
         this.ticketPrice = ticketPrice;
     }
@@ -40,5 +40,21 @@ public class Show implements Serializable{
 
     public void setTicketPrice(Number ticketPrice) {
         this.ticketPrice = ticketPrice;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 }

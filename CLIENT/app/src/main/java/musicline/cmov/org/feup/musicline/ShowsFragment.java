@@ -69,7 +69,9 @@ public class ShowsFragment extends Fragment implements AdapterView.OnItemClickLi
                         Show s = new Show(
                                 show.getString("_id"),
                                 show.getString("name"),
-                                show.getString("date"),
+                                show.getString("description"),
+                                show.getString("place"),
+                                show.getString("date_string"),
                                 show.getInt("ticketPrice")
                         );
 
@@ -126,9 +128,9 @@ public class ShowsFragment extends Fragment implements AdapterView.OnItemClickLi
 
             Show s = shows.get(position);
             ((TextView)row.findViewById(R.id.show_title)).setText(s.getName());
-            ((TextView)row.findViewById(R.id.show_day)).setText("Dia");
-            ((TextView)row.findViewById(R.id.show_hour)).setText("Hora");
-            ((TextView)row.findViewById(R.id.show_price)).setText(String.valueOf(s.getTicketPrice()));
+            ((TextView)row.findViewById(R.id.show_day)).setText(s.getDate());
+            ((TextView)row.findViewById(R.id.show_place)).setText(s.getPlace());
+            ((TextView)row.findViewById(R.id.show_price)).setText(String.valueOf(s.getTicketPrice() + " €"));
             ImageView icon = row.findViewById(R.id.show_icon);
             icon.setImageResource(R.drawable.show_icon);
             return (row);
