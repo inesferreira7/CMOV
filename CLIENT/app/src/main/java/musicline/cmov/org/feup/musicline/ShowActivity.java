@@ -16,17 +16,22 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import musicline.cmov.org.feup.musicline.utils.Show;
+import musicline.cmov.org.feup.musicline.utils.Ticket;
 
 public class ShowActivity extends AppCompatActivity {
 
@@ -34,6 +39,7 @@ public class ShowActivity extends AppCompatActivity {
     ElegantNumberButton quantity_tickets;
     String actual_quantity;
     Button buy_tickets;
+    final List<Ticket> ticket_list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,11 +105,39 @@ public class ShowActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, body,
-                new Response.Listener<JSONObject>() {
+        JSONArray array = new JSONArray();
+
+        array.put(body);
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, array,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i("Ticket response", response.toString());
+                    public void onResponse(JSONArray tickets) {
+                        Log.i("Ticket response", tickets.toString());
+
+                        for(int i = 0; i < tickets.length(); i++){
+                            try {
+                                JSONObject t = (JSONObject) tickets.get(i);
+
+                                Ticket ticket = new Ticket(
+                                        t.getString("performanceName"),
+                                        t.getString("performanceDate"),
+                                        t.getString("performanceId"),
+                                        t.getString("customerId"),
+                                        t.getString("seat"),
+                                        t.getBoolean("isUsed")
+                                );
+
+                                ticket_list.add(ticket);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        SharedPreferences.Editor editor = getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE).edit();
+                        //TODO por a lista nas shared preferences
+                        editor.apply();
+
                         //TODO Voltar para a lista de shows
                     }
                 },
