@@ -49,6 +49,7 @@
     <string name="next_shows">Next shows</string>
     <string name="date_description">Date: </string>
     <string name="price_description">Price: </string>
+    <string name="place_description">Place:</string>
     <string name="total_price">Total Price: </string>
     <string name="nr_tickets">Nr. Tickets: </string>
     <string name="buy_tickets">Buy tickets</string>

@@ -2,11 +2,11 @@ package musicline.cmov.org.feup.musicline.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +20,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,14 +35,17 @@ import musicline.cmov.org.feup.musicline.objects.Show;
 import musicline.cmov.org.feup.musicline.utils.Globals;
 import musicline.cmov.org.feup.musicline.utils.Ticket;
 
+import com.google.gson.Gson;
+
 public class ShowActivity extends AppCompatActivity {
 
-    TextView title, date, price, total_price;
+    TextView title, date, price, total_price, description, place;
     ElegantNumberButton quantity_tickets;
     String actual_quantity;
     Button buy_tickets;
     final List<Ticket> ticket_list = new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +67,13 @@ public class ShowActivity extends AppCompatActivity {
 
         total_price = (TextView)findViewById(R.id.total_price_info);
         total_price.setText("   " + show.getTicketPrice().toString() + "€");
-        // total_price = quantity * price
 
+        description = (TextView)findViewById(R.id.show_description);
+        description.setText(show.getDescription());
+        description.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+
+        place = (TextView)findViewById(R.id.place_info);
+        place.setText("   " + show.getPlace());
 
         quantity_tickets = (ElegantNumberButton)findViewById(R.id.ticket_button);
         quantity_tickets.setOnClickListener(new ElegantNumberButton.OnClickListener() {
