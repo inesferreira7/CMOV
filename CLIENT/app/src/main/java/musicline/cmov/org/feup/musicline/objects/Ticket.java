@@ -1,4 +1,4 @@
-package musicline.cmov.org.feup.musicline.utils;
+package musicline.cmov.org.feup.musicline.objects;
 
 public class Ticket {
     String id, performanceName, performanceDate, performanceId, customerId, seat;

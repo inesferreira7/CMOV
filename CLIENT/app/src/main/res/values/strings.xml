@@ -45,7 +45,7 @@
     <string name="addVouchers_button">Add vouchers</string>
     <string name="order_button">Order</string>
 
-    <!--Shows string -->
+    <!--Shows strings -->
     <string name="next_shows">Next shows</string>
     <string name="date_description">Date: </string>
     <string name="price_description">Price: </string>
@@ -53,6 +53,10 @@
     <string name="total_price">Total Price: </string>
     <string name="nr_tickets">Nr. Tickets: </string>
     <string name="buy_tickets">Buy tickets</string>
+
+    <!-- Tickets strings -->
+
+    <string name="my_tickets">My Tickets</string>
 
     <string name="default_tickets">Hello tickets</string>
     <string name="default_vouchers">Hello vouchers</string>
