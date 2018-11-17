@@ -1,5 +1,6 @@
 package musicline.cmov.org.feup.musicline;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -30,7 +32,7 @@ import java.util.List;
 
 import musicline.cmov.org.feup.musicline.utils.Show;
 
-public class ShowsFragment extends Fragment {
+public class ShowsFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     List<Show> shows = new ArrayList<>();
     ArrayAdapter<Show> show_adapter;
@@ -47,6 +49,7 @@ public class ShowsFragment extends Fragment {
 
         list_shows = (ListView)view.findViewById(R.id.list_shows);
         show_adapter = new ShowAdapter();
+        list_shows.setOnItemClickListener(this);
 
         return view;
     }
@@ -93,6 +96,15 @@ public class ShowsFragment extends Fragment {
     private void onSuccess(List<Show> shows){
 
         list_shows.setAdapter(show_adapter);
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Show s = shows.get(i);
+
+        Intent intent = new Intent(getActivity(), ShowActivity.class);
+        startActivity(intent);
 
     }
 
