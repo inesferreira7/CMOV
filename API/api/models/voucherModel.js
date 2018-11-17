@@ -14,7 +14,7 @@ var VoucherSchema = new Schema({
     },
     type: {
         type: String,
-        enum: ['Coffee', 'Soda', 'Sandwich', "Popcorn", "5%"],
+        enum: ['Coffee', "Popcorn", "5%"],
         required: true
     }
 });
