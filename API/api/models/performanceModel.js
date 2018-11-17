@@ -8,6 +8,10 @@ var PerformanceSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: true
+    },
     date_string: {
         type: String,
         required: true
