@@ -69,7 +69,9 @@ public class ShowsFragment extends Fragment implements AdapterView.OnItemClickLi
                         Show s = new Show(
                                 show.getString("_id"),
                                 show.getString("name"),
-                                show.getString("date"),
+                                show.getString("description"),
+                                show.getString("place"),
+                                show.getString("date_string"),
                                 show.getInt("ticketPrice")
                         );
 
