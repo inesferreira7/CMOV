@@ -29,6 +29,7 @@
             android:label="@string/title_activity_homepage"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.ShowActivity"></activity>
+        <activity android:name=".ShowActivity" />
     </application>
 
 </manifest>

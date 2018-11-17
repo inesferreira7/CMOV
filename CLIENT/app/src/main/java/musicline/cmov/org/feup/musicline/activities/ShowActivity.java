@@ -1,4 +1,4 @@
-package musicline.cmov.org.feup.musicline;
+package musicline.cmov.org.feup.musicline.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import musicline.cmov.org.feup.musicline.utils.Show;
+import musicline.cmov.org.feup.musicline.R;
+import musicline.cmov.org.feup.musicline.objects.Show;
+import musicline.cmov.org.feup.musicline.utils.Globals;
 import musicline.cmov.org.feup.musicline.utils.Ticket;
 
 public class ShowActivity extends AppCompatActivity {
@@ -135,7 +138,9 @@ public class ShowActivity extends AppCompatActivity {
                         }
 
                         SharedPreferences.Editor editor = getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE).edit();
-                        //TODO por a lista nas shared preferences
+                        Gson gson = new Gson();
+                        String json = gson.toJson(ticket_list);
+                        editor.putString("tickets", json);
                         editor.apply();
 
                         //TODO Voltar para a lista de shows
