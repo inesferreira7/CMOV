@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="12"
+    android:id="@+id/fragment_cafeteria"
     tools:context=".fragments.CafeteriaFragment">
 
     <RelativeLayout

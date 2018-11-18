@@ -1,5 +1,6 @@
 package musicline.cmov.org.feup.musicline.fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +36,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import musicline.cmov.org.feup.musicline.activities.ShowActivity;
 import musicline.cmov.org.feup.musicline.adapters.MyAdapter;
 import musicline.cmov.org.feup.musicline.R;
 import musicline.cmov.org.feup.musicline.objects.Show;
@@ -49,7 +52,7 @@ public class CafeteriaFragment extends Fragment{
     MyAdapter order_adapter;
     double order_total;
     TextView order_total_text;
-    Button create_order;
+    Button create_order, add_vouchers;
     ImageButton delete_order;
 
     public CafeteriaFragment() { }
@@ -72,6 +75,18 @@ public class CafeteriaFragment extends Fragment{
         order_total_text= (TextView)view.findViewById(R.id.order_total);
         order_total_text.setTextColor(getResources().getColor(R.color.colorPrimary));
         order_total_text.setTypeface(Typeface.DEFAULT_BOLD);
+        
+        add_vouchers = (Button)view.findViewById(R.id.addVouchers_button);
+        add_vouchers.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment vouchersFragment = new MyVouchersFragment();
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_cafeteria, vouchersFragment)
+                        .commit();
+            }
+        });
 
         delete_order.setOnClickListener(new OnClickListener(){
 
@@ -178,7 +193,13 @@ public class CafeteriaFragment extends Fragment{
         create_order.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                newOrder();
+                if(order.isEmpty()){
+                    Toast.makeText(getActivity(), "Empty order. Please select at least one product", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    newOrder();
+                    Toast.makeText(getActivity(), "Placed order successfully!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
