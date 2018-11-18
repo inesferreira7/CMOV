@@ -8,12 +8,12 @@ exports.getAllVouchers = (req, res) => {
 
     Voucher.find(query, (err, list) => {
         if (err) res.status(500).send(err);
-        res.status(200).send(list.json());
+        res.status(200).send(list);
     });
 };
 
 exports.getVoucher = (req, res) => {
-    Voucher.findById(req.params.voucherId, (err, voucher) => {
+    Voucher.findById(req.body.voucherId, (err, voucher) => {
         if (err) res.status(500).send(err);
         res.status(200).send(voucher);
     });
