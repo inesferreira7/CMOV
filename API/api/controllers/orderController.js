@@ -8,7 +8,7 @@ exports.getAllOrders = (req, res) => {
 
     Order.find(query, (err, list) => {
         if (err) res.status(500).send(err);
-        res.status(200).send(list.json());
+        res.status(200).send(list);
     });
 };
 

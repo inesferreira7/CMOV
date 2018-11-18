@@ -26,11 +26,13 @@ var OrderSchema = new Schema({
     ],
     vouchers: [
         {
-            type: Schema.Types.ObjectId,
-            validate: [
-                arrayLimit,
-                '{PATH} exceeds the limit of 2 vouchers'
-            ]
+            voucherId: {
+                type: Schema.Types.ObjectId,
+                validate: [
+                    arrayLimit,
+                    '{PATH} exceeds the limit of 2 vouchers'
+                ]
+            }
         }
     ],
     totalPrice: {
