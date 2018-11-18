@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import musicline.cmov.org.feup.musicline.fragments.MyOrdersFragment;
 import musicline.cmov.org.feup.musicline.fragments.MyTicketsFragment;
 import musicline.cmov.org.feup.musicline.fragments.MyVouchersFragment;
 import musicline.cmov.org.feup.musicline.R;
@@ -106,6 +107,13 @@ public class HomepageActivity extends AppCompatActivity
             MyVouchersFragment myVouchersFragment = new MyVouchersFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fram, myVouchersFragment, "My Vouchers fragment");
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.nav_MyOrders){
+            setTitle("My orders");
+            MyOrdersFragment myOrdersFragment = new MyOrdersFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fram, myOrdersFragment, "My Orders fragment");
             fragmentTransaction.commit();
         }
 

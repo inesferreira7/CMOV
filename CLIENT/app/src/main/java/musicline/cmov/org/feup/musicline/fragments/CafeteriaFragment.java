@@ -1,15 +1,22 @@
 package musicline.cmov.org.feup.musicline.fragments;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,6 +50,7 @@ public class CafeteriaFragment extends Fragment{
     double order_total;
     TextView order_total_text;
     Button create_order;
+    ImageButton delete_order;
 
     public CafeteriaFragment() { }
 
@@ -51,6 +59,10 @@ public class CafeteriaFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_cafeteria, container, false);
+
+        delete_order = (ImageButton)view.findViewById(R.id.clear_button);
+        delete_order.setVisibility(View.INVISIBLE);
+
         order = new HashMap<>();
         order_list = (ListView) view.findViewById(R.id.order_list);
         order_adapter = new MyAdapter(order);
@@ -61,17 +73,31 @@ public class CafeteriaFragment extends Fragment{
         order_total_text.setTextColor(getResources().getColor(R.color.colorPrimary));
         order_total_text.setTypeface(Typeface.DEFAULT_BOLD);
 
-        coffee_card = (CardView) view.findViewById(R.id.coffee_card);
+        delete_order.setOnClickListener(new OnClickListener(){
 
-        coffee_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                order.clear();
+                order_adapter.updateList(order);
+                order_total=0;
+                order_total_text.setVisibility(View.INVISIBLE);
+                delete_order.setVisibility(View.INVISIBLE);
+            }
+        } );
+
+
+        coffee_card = (CardView) view.findViewById(R.id.coffee_card);
+        coffee_card.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Key existence check
                 Integer quantity = order.get(Globals.Item.Coffee);
                 if(quantity == null) {
+                    delete_order.setVisibility(View.VISIBLE);
                     order.put(Globals.Item.Coffee, 1);
                     order_total+= Globals.COFFEE_PRICE;
                     order_total_text.setText("TOTAL = " + String.valueOf(order_total) + "€");
+                    order_total_text.setVisibility(View.VISIBLE);
                 }
                 else {
                     order.put(Globals.Item.Coffee, quantity+1); //override
@@ -84,14 +110,16 @@ public class CafeteriaFragment extends Fragment{
             });
 
         soda_card = (CardView) view.findViewById(R.id.soda_card);
-        soda_card.setOnClickListener(new View.OnClickListener() {
+        soda_card.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Integer quantity = order.get(Globals.Item.Soda);
                 if(quantity == null) {
+                    delete_order.setVisibility(View.VISIBLE);
                     order.put(Globals.Item.Soda, 1);
                     order_total+= Globals.SODA_PRICE;
                     order_total_text.setText("TOTAL = " + String.valueOf(order_total) + "€");
+                    order_total_text.setVisibility(View.VISIBLE);
                 }
                 else {
                     order.put(Globals.Item.Soda, quantity+1); //override
@@ -103,14 +131,16 @@ public class CafeteriaFragment extends Fragment{
         });
 
         popcorn_card = (CardView) view.findViewById(R.id.popcorn_card);
-        popcorn_card.setOnClickListener(new View.OnClickListener() {
+        popcorn_card.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Integer quantity = order.get(Globals.Item.Popcorn);
                 if(quantity == null) {
+                    delete_order.setVisibility(View.VISIBLE);
                     order.put(Globals.Item.Popcorn, 1);
                     order_total+= Globals.POPCORN_PRICE;
                     order_total_text.setText("TOTAL = " + String.valueOf(order_total) + "€");
+                    order_total_text.setVisibility(View.VISIBLE);
                 }
                 else {
                     order.put(Globals.Item.Popcorn, quantity+1); //override
@@ -123,14 +153,16 @@ public class CafeteriaFragment extends Fragment{
         });
 
         sandwich_card = (CardView) view.findViewById(R.id.sandwich_card);
-        sandwich_card.setOnClickListener(new View.OnClickListener() {
+        sandwich_card.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Integer quantity = order.get(Globals.Item.Sandwich);
                 if(quantity == null) {
+                    delete_order.setVisibility(View.VISIBLE);
                     order.put(Globals.Item.Sandwich, 1);
                     order_total+= Globals.SANDWICH_PRICE;
                     order_total_text.setText("TOTAL = " + String.valueOf(order_total) + "€");
+                    order_total_text.setVisibility(View.VISIBLE);
                 }
                 else {
                     order.put(Globals.Item.Sandwich, quantity+1); //override
@@ -143,7 +175,7 @@ public class CafeteriaFragment extends Fragment{
         });
 
         create_order = (Button) view.findViewById(R.id.order_button);
-        create_order.setOnClickListener(new View.OnClickListener() {
+        create_order.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 newOrder();
