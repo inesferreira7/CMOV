@@ -1,34 +1,54 @@
 package com.example.nuno.terminal;
 
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+    Button ticketButton;
+    public static String URL = "https://9db8b2c1.ngrok.io";
+    List<Ticket> tickets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Button scanButton;
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        scanButton = (Button) findViewById(R.id.scanButton);
+        tickets = new ArrayList<>();
 
-        scanButton.setOnClickListener(new View.OnClickListener() {
+        ticketButton = (Button) findViewById(R.id.scanButton);
+
+        ticketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scan(true);
+                scanTickets(true);
             }
         });
     }
 
-    public void scan(boolean qrcode) {
+    public void scanTickets(boolean qrcode) {
         try {
             Intent intent = new Intent(ACTION_SCAN);
             intent.putExtra("SCAN_MODE", qrcode ? "QR_CODE_MODE" : "PRODUCT_MODE");
@@ -42,21 +62,51 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                String contents = data.getStringExtra("SCAN_RESULT");
+                JSONObject tickets = new JSONObject();
 
-                //TODO read as json
-                /*
-                1- a field will be type of message (ticket or cafeteria)
-                2- another field will be the data
-                {
-                    type: ...,
-                    data: {
-                        ...
-                    }
+                try {
+                    tickets = new JSONObject(data.getStringExtra("SCAN_RESULT"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                 */
-                Log.i("Data", contents);
+
+                validateTickets(tickets);
             }
         }
+    }
+
+    public void validateTickets(final JSONObject ts){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = URL + "/tickets/validate";
+
+        JSONArray array = new JSONArray();
+        array.put(ts);
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, array,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
+                        dialog.setTitle("Ticket validation");
+                        dialog.setMessage("All tickets were validated");
+                        dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        dialog.show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Error API call", error.toString());
+                    }
+                }
+        );
+
+        queue.add(request);
     }
 }

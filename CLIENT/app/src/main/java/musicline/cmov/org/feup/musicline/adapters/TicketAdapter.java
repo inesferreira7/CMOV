@@ -23,8 +23,7 @@ public class TicketAdapter<T> extends BaseAdapter {
     private LayoutInflater inflater;
     private ArrayList<T> list;
     private SparseBooleanArray spa;
-
-    private static int selectedItems;
+    private String date;
 
     public TicketAdapter(Context context, ArrayList<T> list) {
         this.context = context;
@@ -32,8 +31,12 @@ public class TicketAdapter<T> extends BaseAdapter {
         this.spa = new SparseBooleanArray();
         this.list = new ArrayList<>();
         this.list = list;
-        this.selectedItems = 0;
+        this.date = "";
     }
+
+    public void setDate(String date) {this.date = date;}
+
+    public String getDate() { return this.date;}
 
     @Override
     public int getCount() {
@@ -78,12 +81,17 @@ public class TicketAdapter<T> extends BaseAdapter {
         checkbox.setChecked(this.spa.get(position));
         checkbox.setOnCheckedChangeListener(checkedChangeListener);
 
+        if(ticket.isUsed()) checkbox.setEnabled(false);
+        else checkbox.setEnabled(true);
+
         return convertView;
     }
 
     CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+            Ticket t = (Ticket) list.get((Integer) compoundButton.getTag());
+
             if(checked){
                 spa.put((Integer) compoundButton.getTag(), checked);
             }else{
