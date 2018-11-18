@@ -3,13 +3,16 @@ package musicline.cmov.org.feup.musicline.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -59,6 +62,9 @@ public class ShowActivity extends AppCompatActivity {
         title = (TextView)findViewById(R.id.showpage_title);
         title.setText(show.getName());
 
+        place = (TextView)findViewById(R.id.place_info);
+        place.setText("   " + show.getPlace());
+
         date = (TextView)findViewById(R.id.date_info);
         date.setText("   " + show.getDate());
 
@@ -67,6 +73,10 @@ public class ShowActivity extends AppCompatActivity {
 
         total_price = (TextView)findViewById(R.id.total_price_info);
         total_price.setText("   " + show.getTicketPrice().toString() + "€");
+
+        description = (TextView)findViewById(R.id.show_description);
+        description.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+        description.setText(show.getDescription());
 
 
         quantity_tickets = (ElegantNumberButton)findViewById(R.id.ticket_button);
@@ -87,6 +97,8 @@ public class ShowActivity extends AppCompatActivity {
                 if(Integer.parseInt(actual_quantity) * show.getTicketPrice().intValue() % 100 == 0){
                     createVoucher(true);
                 }
+
+                Toast.makeText(ShowActivity.this, "Purchased ticket successfully!", Toast.LENGTH_SHORT).show();
             }
         });
     }
