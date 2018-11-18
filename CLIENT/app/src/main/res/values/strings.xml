@@ -55,10 +55,11 @@
     <string name="buy_tickets">Buy tickets</string>
 
     <!-- Tickets strings -->
-
     <string name="my_tickets">My Tickets</string>
 
-    <string name="default_tickets">Hello tickets</string>
-    <string name="default_vouchers">Hello vouchers</string>
+    <!-- Vouchers strings -->
+    <string name="my_vouchers">My Vouchers</string>
+
+
 
 </resources>

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -99,6 +100,7 @@ public class MyVouchersFragment extends Fragment {
                                         voucher.getBoolean("isUsed")
                                 );
 
+                                if(!voucher.getBoolean("isUsed"))
                                 vouchers.add(v);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -144,7 +146,24 @@ public class MyVouchersFragment extends Fragment {
             }
 
             Voucher v = vouchers.get(position);
-            ((TextView)row.findViewById(R.id.customer_id)).setText(v.getCustomerId());
+            ImageView icon = (ImageView)row.findViewById(R.id.voucher_icon);
+            TextView type = (TextView)row.findViewById(R.id.voucher_type);
+
+            if (v.getType().equals("Coffee")){
+                icon.setImageResource(R.drawable.coffee_voucher);
+                type.setText("Free Coffee");
+            }
+
+            if (v.getType().equals("Popcorn")){
+                icon.setImageResource(R.drawable.popcorn_voucher);
+                type.setText("Free Popcorn");
+            }
+
+            if(v.getType().equals("5%")){
+                icon.setImageResource(R.drawable.percentage_voucher);
+                type.setText("5% Discount");
+            }
+
             return (row);
         }
     }
