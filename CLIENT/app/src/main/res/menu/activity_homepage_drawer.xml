@@ -20,5 +20,9 @@
             android:id="@+id/nav_myVouchers"
             android:icon="@drawable/ic_monetization_on_black_24dp"
             android:title="@string/nav_myVouchers"/>
+        <item
+            android:id="@+id/nav_MyOrders"
+            android:icon="@drawable/ic_free_breakfast_black_24dp"
+            android:title="@string/nav_myOrders"/>
     </group>
 </menu>

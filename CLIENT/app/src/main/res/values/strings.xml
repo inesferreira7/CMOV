@@ -33,6 +33,7 @@
     <string name="nav_cafeteria">Cafeteria</string>
     <string name="nav_myTickets">My Tickets</string>
     <string name="nav_myVouchers">My Vouchers</string>
+    <string name="nav_myOrders"> My Orders</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -60,6 +61,8 @@
     <!-- Vouchers strings -->
     <string name="my_vouchers">My Vouchers</string>
 
+    <!-- Orders strings -->
+    <string name="my_orders">My Orders</string>
 
 
 </resources>
