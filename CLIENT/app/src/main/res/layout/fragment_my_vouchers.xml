@@ -5,10 +5,23 @@
     android:layout_height="match_parent"
     tools:context=".fragments.MyVouchersFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/my_vouchers"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+
     <ListView
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/list_vouchers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"></ListView>
+        android:layout_marginTop="70dp"></ListView>
 
 </FrameLayout>

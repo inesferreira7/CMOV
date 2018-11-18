@@ -52,13 +52,14 @@
     <string name="place_description">Place:</string>
     <string name="total_price">Total Price: </string>
     <string name="nr_tickets">Nr. Tickets: </string>
-    <string name="buy_tickets">Buy tickets</string>
+    <string name="buy_tickets">Purchase tickets</string>
 
     <!-- Tickets strings -->
-
     <string name="my_tickets">My Tickets</string>
 
-    <string name="default_tickets">Hello tickets</string>
-    <string name="default_vouchers">Hello vouchers</string>
+    <!-- Vouchers strings -->
+    <string name="my_vouchers">My Vouchers</string>
+
+
 
 </resources>
