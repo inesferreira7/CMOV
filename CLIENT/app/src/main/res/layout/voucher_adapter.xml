@@ -18,6 +18,7 @@
 
     <LinearLayout
         android:padding="10dp"
+        android:layout_marginTop="6dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/voucher_icon"
@@ -32,8 +33,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="5dp"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 </RelativeLayout>

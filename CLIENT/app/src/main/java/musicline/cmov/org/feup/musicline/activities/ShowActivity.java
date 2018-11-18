@@ -110,7 +110,7 @@ public class ShowActivity extends AppCompatActivity {
 
         JSONObject body = new JSONObject();
         Random rand = new Random();
-        int type = rand.nextInt(1) + 0;
+        int type = rand.nextInt(2) + 0;
         String type_string = new String();
 
         if(discount) type = 2;

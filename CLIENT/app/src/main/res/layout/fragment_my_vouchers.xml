@@ -17,9 +17,11 @@
 
 
     <ListView
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/list_vouchers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"></ListView>
+        android:layout_marginTop="70dp"></ListView>
 
 </FrameLayout>
