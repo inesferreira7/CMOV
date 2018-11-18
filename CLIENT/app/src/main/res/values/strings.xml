@@ -52,7 +52,7 @@
     <string name="place_description">Place:</string>
     <string name="total_price">Total Price: </string>
     <string name="nr_tickets">Nr. Tickets: </string>
-    <string name="buy_tickets">Buy tickets</string>
+    <string name="buy_tickets">Purchase tickets</string>
 
     <!-- Tickets strings -->
     <string name="my_tickets">My Tickets</string>

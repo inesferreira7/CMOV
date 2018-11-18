@@ -1,10 +1,12 @@
 package musicline.cmov.org.feup.musicline.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
@@ -92,13 +94,33 @@ public class ShowActivity extends AppCompatActivity {
         buy_tickets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buyTickets(show);
-                createVoucher(false);
-                if(Integer.parseInt(actual_quantity) * show.getTicketPrice().intValue() % 100 == 0){
-                    createVoucher(true);
-                }
 
-                Toast.makeText(ShowActivity.this, "Purchased ticket successfully!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShowActivity.this);
+                builder.setTitle("Purchase confirmation");
+                builder.setMessage("Are you sure you want to purchase " + actual_quantity + " tickets?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        buyTickets(show);
+                        createVoucher(false);
+                        if(Integer.parseInt(actual_quantity) * show.getTicketPrice().intValue() % 100 == 0){
+                            createVoucher(true);
+                        }
+
+                        Toast.makeText(ShowActivity.this, "Purchased ticket successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
     }
