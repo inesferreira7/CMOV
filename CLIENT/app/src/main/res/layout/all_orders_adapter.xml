@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="4dp">
+
+    <ImageView
+        android:layout_marginLeft="8dp"
+        android:id="@+id/order_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:maxWidth="70dp"
+        android:maxHeight="70dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_view_list_black_24dp"
+        android:padding="10dp" />
+
+    <LinearLayout
+        android:id="@+id/all_products"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/order_icon"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp">
+
+    </LinearLayout>
+</RelativeLayout>

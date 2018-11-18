@@ -15,4 +15,12 @@
         android:textSize="18dp"
         android:textStyle="bold" />
 
+    <ListView
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/list_all_orders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"></ListView>
+
 </FrameLayout>
