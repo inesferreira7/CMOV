@@ -5,13 +5,17 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,10 +42,12 @@ import musicline.cmov.org.feup.musicline.utils.Globals;
 import static android.content.Context.MODE_PRIVATE;
 
 public class MyVouchersFragment extends Fragment {
+
     SharedPreferences prefs;
     JSONArray vouchers_json;
-    List<Voucher> vouchers;
+    List<Voucher> vouchers = new ArrayList<>();
     ListView list_vouchers;
+    ArrayAdapter<Voucher> voucher_adapter;
 
     public MyVouchersFragment() {
         // Required empty public constructor
@@ -53,7 +59,6 @@ public class MyVouchersFragment extends Fragment {
         prefs = view.getContext().getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE);
         vouchers_json = new JSONArray();
 
-        vouchers = new ArrayList<>();
 
         ConnectivityManager connectivityManager = (ConnectivityManager) view.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
@@ -69,9 +74,8 @@ public class MyVouchersFragment extends Fragment {
             }
         }
 
-        //list_vouchers = (ListView)view.findViewById(R.id.list_vouchers);
-        //voucher_adapter = new MyTicketsFragment.VoucherAdapter();
-        //onSuccess(vouchers);
+        list_vouchers = (ListView)view.findViewById(R.id.list_vouchers);
+        voucher_adapter = new VoucherAdapter();
 
         return view;
     }
@@ -123,6 +127,25 @@ public class MyVouchersFragment extends Fragment {
 
     private void onSuccess(List<Voucher> tickets) {
         //spinner.setVisibility(View.GONE);
-        //list_tickets.setAdapter(ticket_adapter);
+        list_vouchers.setAdapter(voucher_adapter);
+    }
+
+    private class VoucherAdapter extends ArrayAdapter<Voucher> {
+
+        VoucherAdapter(){super(MyVouchersFragment.this.getContext(), R.layout.voucher_adapter, vouchers);}
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View row = convertView;
+            if(row == null){
+                LayoutInflater inflater = getLayoutInflater();
+                row = inflater.inflate(R.layout.voucher_adapter, parent, false);
+            }
+
+            Voucher v = vouchers.get(position);
+            ((TextView)row.findViewById(R.id.customer_id)).setText(v.getCustomerId());
+            return (row);
+        }
     }
 }
