@@ -1,6 +1,8 @@
 package musicline.cmov.org.feup.musicline.objects;
 
-public class Ticket {
+import java.io.Serializable;
+
+public class Ticket implements Serializable {
     String id, performanceName, performanceDate, performanceId, customerId, seat;
     boolean isUsed;
 
