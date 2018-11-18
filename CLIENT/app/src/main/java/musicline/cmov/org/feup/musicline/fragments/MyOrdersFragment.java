@@ -111,7 +111,7 @@ public class MyOrdersFragment extends Fragment {
                                     order.getDouble("totalPrice"),
                                     order.getBoolean("validated")
                                 );
-                                
+
                                 orders.add(o);
                             } catch (JSONException e) {
                                 e.printStackTrace();

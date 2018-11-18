@@ -64,15 +64,31 @@ exports.deleteTicket = (req, res) => {
  * If no error is encountered, sends a response with a 200 status code and updates the used status of the ticket.
  */
 exports.validateTicket = (req, res) => {
-    var query = {
-        _id: req.params.ticketId,
-        customerId: req.params.customerId,
-        isUsed: false
-    };
+    console.log("Begin ticket validation...") 
 
-    Ticket.findOneAndUpdate(query, {$set: {isUsed: true}}, {returnNewDocument: true}, (err, result) => {
-        if (err) res.status(500).send(err);
-        if (result != null) res.status(200).send({message: 'The ticket is now valid'});
-        else res.status(304).send({message: 'The ticket is already validated'});
-    });
+    var elements = req.body[0].ids.substring(1, req.body[0].ids.length-1);
+    var elements_array = elements.split(", ");
+    var query = {
+        _id: {
+            $in: elements_array
+        },
+        customerId: req.body[0].customerId
+    }
+
+    Ticket.find(query, (err, result) => {
+        if (err){
+            res.status(500).send(err);
+        } else{
+            for(var i = 0; i < result.length; i++) {
+                if (!result[i].isUsed){
+                    result[i].isUsed = true;
+                    result[i].save(err => {
+                        if(err) res.status(500).send(err);
+                    });
+                } 
+            }
+            console.log(JSON.stringify(result));
+            res.status(200).send(JSON.stringify(result));
+        }
+    })
 }
