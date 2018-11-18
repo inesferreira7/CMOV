@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +35,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import musicline.cmov.org.feup.musicline.activities.ShowActivity;
 import musicline.cmov.org.feup.musicline.adapters.MyAdapter;
 import musicline.cmov.org.feup.musicline.R;
 import musicline.cmov.org.feup.musicline.objects.Show;
@@ -178,7 +180,13 @@ public class CafeteriaFragment extends Fragment{
         create_order.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                newOrder();
+                if(order.isEmpty()){
+                    Toast.makeText(getActivity(), "Empty order. Please select at least one product", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    newOrder();
+                    Toast.makeText(getActivity(), "Placed order successfully!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
