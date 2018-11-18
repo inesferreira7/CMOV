@@ -57,9 +57,11 @@
 
     <!-- Tickets strings -->
     <string name="my_tickets">My Tickets</string>
+    <string name="validate">Validate Tickets</string>
 
     <!-- Vouchers strings -->
     <string name="my_vouchers">My Vouchers</string>
+    <string name="title_activity_ticket">TicketActivity</string>
 
     <!-- Orders strings -->
     <string name="my_orders">My Orders</string>

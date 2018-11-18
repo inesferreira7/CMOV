@@ -1,21 +1,19 @@
 package musicline.cmov.org.feup.musicline.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,22 +33,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import musicline.cmov.org.feup.musicline.R;
-import musicline.cmov.org.feup.musicline.objects.Show;
+import musicline.cmov.org.feup.musicline.activities.ValidateTicketsActivity;
+import musicline.cmov.org.feup.musicline.adapters.TicketAdapter;
 import musicline.cmov.org.feup.musicline.objects.Ticket;
-import musicline.cmov.org.feup.musicline.objects.Voucher;
 import musicline.cmov.org.feup.musicline.utils.Globals;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class MyTicketsFragment extends Fragment {
 
-    List<Ticket> tickets;
-    ArrayAdapter<Ticket> ticket_adapter;
+    ArrayList<Ticket> tickets;
+    TicketAdapter<Ticket> ticket_adapter;
     ListView list_tickets;
 
     SharedPreferences prefs;
     JSONArray tickets_json;
     private ProgressBar spinner;
+
+    Button validate_button;
 
     //requires empty constructor
     public MyTicketsFragment() { }
@@ -81,9 +81,22 @@ public class MyTicketsFragment extends Fragment {
         }
 
         list_tickets = (ListView)view.findViewById(R.id.list_tickets);
-        ticket_adapter = new TicketAdapter();
+        ticket_adapter = new TicketAdapter(view.getContext(), tickets);
         onSuccess(tickets);
 
+        validate_button = (Button)view.findViewById(R.id.validate);
+        validate_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Ticket> selected = new ArrayList<>();
+
+                selected = ticket_adapter.getCheckedItems();
+
+                Intent intent = new Intent(getContext(), ValidateTicketsActivity.class);
+                intent.putExtra("Tickets", selected);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -138,25 +151,5 @@ public class MyTicketsFragment extends Fragment {
     private void onSuccess(List<Ticket> tickets) {
         spinner.setVisibility(View.GONE);
         list_tickets.setAdapter(ticket_adapter);
-    }
-
-    private class TicketAdapter extends ArrayAdapter<Ticket> {
-
-        TicketAdapter(){super(MyTicketsFragment.this.getContext(), R.layout.ticket_adapter, tickets);}
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-            View row = convertView;
-            if(row == null){
-                LayoutInflater inflater = getLayoutInflater();
-                row = inflater.inflate(R.layout.ticket_adapter, parent,false);
-            }
-
-            Ticket t = tickets.get(position);
-            ((TextView)row.findViewById(R.id.performance_name)).setText(t.getPerformanceName());
-            return (row);
-        }
     }
 }
