@@ -165,7 +165,7 @@ public class ShowActivity extends AppCompatActivity {
     public void buyTickets(Show show) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Globals.URL + "/tickets/buy";
-        SharedPreferences prefs = this.getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE);
+        final SharedPreferences prefs = this.getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE);
 
         JSONObject body = new JSONObject();
         Random rand = new Random();
@@ -191,6 +191,17 @@ public class ShowActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray tickets) {
+                        String json = prefs.getString("tickets", null);
+                        Gson gson = new Gson();
+                        Type type = new TypeToken<ArrayList<Ticket>>() {}.getType();
+                        List<Ticket> ticket_list;
+
+                        if (json != null){
+                            ticket_list = gson.fromJson(json, type);
+                        } else {
+                            ticket_list = new ArrayList<>();
+                        }
+
                         for(int i = 0; i < tickets.length(); i++){
                             try {
                                 JSONObject t = (JSONObject) tickets.get(i);
@@ -212,8 +223,8 @@ public class ShowActivity extends AppCompatActivity {
                         }
 
                         SharedPreferences.Editor editor = getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE).edit();
-                        Gson gson = new Gson();
-                        String json = gson.toJson(ticket_list);
+                        gson = new Gson();
+                        json = gson.toJson(ticket_list);
                         editor.putString("tickets", json);
                         editor.apply();
                     }
