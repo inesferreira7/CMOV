@@ -42,13 +42,17 @@ import musicline.cmov.org.feup.musicline.objects.Voucher;
 import musicline.cmov.org.feup.musicline.utils.Globals;
 import musicline.cmov.org.feup.musicline.objects.Ticket;
 
+/**
+ * Page of individual show. It shows some more detailed information and it is
+ * where the user choose the number of tickets and purchased them
+ */
+
 public class ShowActivity extends AppCompatActivity {
 
     TextView title, date, price, total_price, description, place;
     ElegantNumberButton quantity_tickets;
     String actual_quantity;
     Button buy_tickets;
-    final List<Ticket> ticket_list = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -59,7 +63,7 @@ public class ShowActivity extends AppCompatActivity {
         Intent i = getIntent();
         final Show show = (Show)i.getSerializableExtra("Show");
 
-        actual_quantity = "1";
+        actual_quantity = "1"; //default number
 
         title = (TextView)findViewById(R.id.showpage_title);
         title.setText(show.getName());
@@ -77,7 +81,7 @@ public class ShowActivity extends AppCompatActivity {
         total_price.setText("   " + show.getTicketPrice().toString() + "€");
 
         description = (TextView)findViewById(R.id.show_description);
-        description.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+        description.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD); //justified description
         description.setText(show.getDescription());
 
 
@@ -95,6 +99,7 @@ public class ShowActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //Ensure customer confirmation
                 AlertDialog.Builder builder = new AlertDialog.Builder(ShowActivity.this);
                 builder.setTitle("Purchase confirmation");
                 builder.setMessage("Are you sure you want to purchase " + actual_quantity + " tickets?");
@@ -124,6 +129,14 @@ public class ShowActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Creates voucher. For each bought ticket, it is created a cafeteria voucher with free
+     * coffee or free popcorn randomly selected. If the total paid value is a multiple of
+     * 100€, it is generated another kind of voucher that gives 5% discount in a cafeteria
+     * order.
+     * @param discount
+     */
 
     public void createVoucher(boolean discount) {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -196,6 +209,12 @@ public class ShowActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+    /**
+     * Buy tickets. Associates the number of purchased tickets with the customer. Then
+     * he can consult the list of his tickets and then validate them
+     * @param show
+     */
+
     public void buyTickets(Show show) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Globals.URL + "/tickets/buy";
@@ -204,6 +223,7 @@ public class ShowActivity extends AppCompatActivity {
         JSONObject body = new JSONObject();
         Random rand = new Random();
 
+        //random number (no need to care about availability and ensuring unique places)
         int  seat = rand.nextInt(500) + 1;
 
         try {
