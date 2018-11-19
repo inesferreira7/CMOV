@@ -213,7 +213,7 @@ public class ShowActivity extends AppCompatActivity {
 
     /**
      * Buy tickets. Associates the number of purchased tickets with the customer. Then
-     * he can consult the list of his tickets and then validate them
+     * he can consult the list of his tickets and validate them
      * @param show
      */
 

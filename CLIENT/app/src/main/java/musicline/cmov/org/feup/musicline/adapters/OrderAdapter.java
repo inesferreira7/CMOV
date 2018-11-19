@@ -1,30 +1,28 @@
 package musicline.cmov.org.feup.musicline.adapters;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Map;
 
 import musicline.cmov.org.feup.musicline.R;
-import musicline.cmov.org.feup.musicline.objects.Show;
 import musicline.cmov.org.feup.musicline.utils.Globals;
 
-public class MyAdapter extends BaseAdapter{
+/**
+ * Custom adapter to deal with hashmap information.
+ */
+
+public class OrderAdapter extends BaseAdapter{
 
     private final ArrayList orderData;
 
-    public MyAdapter(Map<Globals.Item, Integer>order){
+    public OrderAdapter(Map<Globals.Item, Integer>order){
         orderData = new ArrayList();
         orderData.addAll(order.entrySet());
     }

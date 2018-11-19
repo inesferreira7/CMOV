@@ -1,5 +1,8 @@
 package musicline.cmov.org.feup.musicline.utils;
 
+/**
+ * Class that stores all variables and methods used through the application
+ */
 
 public class Globals {
     public static String PREFERENCES_NAME = "UserPreferences";

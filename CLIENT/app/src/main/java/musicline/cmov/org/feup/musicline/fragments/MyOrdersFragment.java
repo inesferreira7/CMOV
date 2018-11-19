@@ -44,6 +44,10 @@ import musicline.cmov.org.feup.musicline.utils.Globals;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * Lists all past placed orders of a user
+ */
+
 public class MyOrdersFragment extends Fragment {
     List<Order> orders = new ArrayList<>();
     ListView list_all_orders;
@@ -173,6 +177,7 @@ public class MyOrdersFragment extends Fragment {
             Log.e("products", products.toString());
             linearLayout = ((LinearLayout) row.findViewById(R.id.all_products));
 
+            //for each order, creates dynamically textview for each product
             for (Map.Entry<String, Integer> entry : products.entrySet()) {
                 LinearLayout layout = new LinearLayout(getContext());
                 layout.setOrientation(LinearLayout.HORIZONTAL);

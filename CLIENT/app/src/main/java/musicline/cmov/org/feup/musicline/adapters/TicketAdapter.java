@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import musicline.cmov.org.feup.musicline.R;
 import musicline.cmov.org.feup.musicline.objects.Ticket;
 
+/**
+ * Custom adapter to deal with multiple selection
+ */
 public class TicketAdapter<T> extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
@@ -101,6 +104,7 @@ public class TicketAdapter<T> extends BaseAdapter {
                 spa.delete((Integer) compoundButton.getTag());
             }
 
+            //customer can only validate 4 tickets for each time
             if(spa.size() == 5){
                 Toast.makeText(context, "Select only up to 4 tickets to validate!", Toast.LENGTH_LONG).show();
                 compoundButton.setChecked(false);
