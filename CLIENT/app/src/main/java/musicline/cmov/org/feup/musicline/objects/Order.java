@@ -1,9 +1,10 @@
 package musicline.cmov.org.feup.musicline.objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Order {
+public class Order implements Serializable {
     String id;
     String customerId;
     HashMap<String, Integer> products;

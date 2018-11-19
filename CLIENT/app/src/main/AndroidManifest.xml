@@ -30,7 +30,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.ShowActivity" />
         <activity android:name=".activities.ValidateTicketsActivity" />
-        <activity android:name=".activities.VouchersToUse"></activity>
+        <activity android:name=".activities.VouchersToUse" />
+        <activity android:name=".activities.ValidateOrderActivity"></activity>
     </application>
 
 </manifest>

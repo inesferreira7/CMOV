@@ -1,5 +1,6 @@
 package musicline.cmov.org.feup.musicline.fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,7 +36,10 @@ import java.util.List;
 import java.util.Map;
 
 import musicline.cmov.org.feup.musicline.R;
+import musicline.cmov.org.feup.musicline.activities.ValidateOrderActivity;
+import musicline.cmov.org.feup.musicline.activities.ValidateTicketsActivity;
 import musicline.cmov.org.feup.musicline.objects.Order;
+import musicline.cmov.org.feup.musicline.objects.Ticket;
 import musicline.cmov.org.feup.musicline.utils.Globals;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -69,6 +74,18 @@ public class MyOrdersFragment extends Fragment {
         listOrders(orders_json);
         list_all_orders = (ListView)view.findViewById(R.id.list_all_orders);
         all_orders_adapter = new OrderAdapter();
+
+        list_all_orders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Order selected = orders.get(i);
+
+                Intent intent = new Intent(getContext(), ValidateOrderActivity.class);
+                intent.putExtra("Order", selected);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
