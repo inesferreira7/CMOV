@@ -23,6 +23,9 @@ import musicline.cmov.org.feup.musicline.R;
 import musicline.cmov.org.feup.musicline.objects.Voucher;
 import musicline.cmov.org.feup.musicline.utils.Globals;
 
+/**
+ * Custom adapter to deal with multiple selection
+ */
 public class VouchersToUseAdapter<T> extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
@@ -82,6 +85,7 @@ public class VouchersToUseAdapter<T> extends BaseAdapter {
         checkbox.setChecked(this.spa.get(position));
         checkbox.setOnCheckedChangeListener(checkedChangeListener);
 
+        //information (icon and description) according to type of voucher
         if (v.getType().equals("Coffee")) {
             icon.setImageResource(R.drawable.coffee_voucher);
             type.setText("Free Coffee");
@@ -120,6 +124,7 @@ public class VouchersToUseAdapter<T> extends BaseAdapter {
                 spa.delete((Integer) compoundButton.getTag());
             }
 
+            //customer can only use 2 vouchers to apply discount for each order
             if (spa.size() == 3) {
                 Toast.makeText(context, "Select only up to 2 vouchers!", Toast.LENGTH_LONG).show();
                 compoundButton.setChecked(false);

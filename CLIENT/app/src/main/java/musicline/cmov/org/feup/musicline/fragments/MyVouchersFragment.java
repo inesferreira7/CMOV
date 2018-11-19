@@ -42,6 +42,10 @@ import musicline.cmov.org.feup.musicline.utils.Globals;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * Lists all vouchers of a user
+ */
+
 public class MyVouchersFragment extends Fragment {
 
     SharedPreferences prefs;

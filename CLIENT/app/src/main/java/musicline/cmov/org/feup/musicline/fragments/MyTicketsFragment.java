@@ -41,6 +41,10 @@ import musicline.cmov.org.feup.musicline.utils.Globals;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ *  Lists all tickets of a user. A user can choose at most 4 tickets to validate in terminal
+ */
+
 public class MyTicketsFragment extends Fragment {
 
     ArrayList<Ticket> tickets;

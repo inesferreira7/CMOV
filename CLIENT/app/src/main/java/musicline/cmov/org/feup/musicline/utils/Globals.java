@@ -1,9 +1,12 @@
 package musicline.cmov.org.feup.musicline.utils;
 
+/**
+ * Class that stores all variables and methods used through the application
+ */
 
 public class Globals {
     public static String PREFERENCES_NAME = "UserPreferences";
-    public static String URL = "https://800f6f20.ngrok.io";
+    public static String URL = "https://b264eaeb.ngrok.io";
     public enum Item {Coffee, Soda, Popcorn, Sandwich};
     public static double COFFEE_PRICE = 1.00;
     public static double SODA_PRICE = 1.50;

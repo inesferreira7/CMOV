@@ -48,6 +48,10 @@ import musicline.cmov.org.feup.musicline.objects.Ticket;
 import musicline.cmov.org.feup.musicline.objects.Voucher;
 import musicline.cmov.org.feup.musicline.utils.Globals;
 
+/**
+ * Handles adding vouchers to cafeteria orders. When placing an order, a customer can
+ * use at most two of his unused vouchers (only one 5% voucher is accepted in each order).
+ */
 public class VouchersToUse extends AppCompatActivity {
 
     SharedPreferences prefs;
@@ -122,7 +126,7 @@ public class VouchersToUse extends AppCompatActivity {
                                         voucher.getBoolean("isUsed")
                                 );
 
-                                if(!voucher.getBoolean("isUsed"))
+                                if(!voucher.getBoolean("isUsed")) //only unused vouchers
                                     vouchers.add(v);
                             } catch (JSONException e) {
                                 e.printStackTrace();

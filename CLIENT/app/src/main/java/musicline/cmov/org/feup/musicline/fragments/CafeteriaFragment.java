@@ -2,12 +2,7 @@ package musicline.cmov.org.feup.musicline.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -37,11 +32,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import musicline.cmov.org.feup.musicline.activities.ShowActivity;
 import musicline.cmov.org.feup.musicline.activities.VouchersToUse;
-import musicline.cmov.org.feup.musicline.adapters.MyAdapter;
+import musicline.cmov.org.feup.musicline.adapters.OrderAdapter;
 import musicline.cmov.org.feup.musicline.R;
-import musicline.cmov.org.feup.musicline.objects.Show;
 import musicline.cmov.org.feup.musicline.objects.Voucher;
 import musicline.cmov.org.feup.musicline.utils.Globals;
 
@@ -53,7 +46,7 @@ public class CafeteriaFragment extends Fragment{
     HashMap<Globals.Item, Integer> order;
     CardView coffee_card, soda_card, popcorn_card, sandwich_card;
     ListView order_list;
-    MyAdapter order_adapter;
+    OrderAdapter order_adapter;
     double order_total;
     TextView order_total_text;
     Button create_order, add_vouchers;
@@ -75,7 +68,7 @@ public class CafeteriaFragment extends Fragment{
 
         order = new HashMap<>();
         order_list = (ListView) view.findViewById(R.id.order_list);
-        order_adapter = new MyAdapter(order);
+        order_adapter = new OrderAdapter(order);
         order_list.setAdapter(order_adapter);
 
         order_total = 0;
@@ -93,6 +86,7 @@ public class CafeteriaFragment extends Fragment{
             }
         });
 
+        //in the case of missclick the user can erase the order and start a new one
         delete_order.setOnClickListener(new OnClickListener(){
 
             @Override
@@ -211,6 +205,10 @@ public class CafeteriaFragment extends Fragment{
         return view;
     }
 
+    /**
+     * Makes as order, sending information of customerId, products and their quantities and vouchers
+     */
+
     public void newOrder(){
         RequestQueue queue = Volley.newRequestQueue(this.getContext());
         String url = Globals.URL + "/order";
@@ -257,6 +255,10 @@ public class CafeteriaFragment extends Fragment{
 
         queue.add(request);
     }
+
+    /**
+     * Transforms order in a JSONArray
+     */
 
     public JSONArray getOrderProducts(){
         JSONArray products = new JSONArray();

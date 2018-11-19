@@ -39,6 +39,10 @@ import musicline.cmov.org.feup.musicline.utils.Globals;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * List next shows. Customer can see a list of shows (name, date, place and price). For
+ * more detailed information and to purchase tickets, he has to click on desired show.
+ */
 public class ShowsFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     List<Show> shows = new ArrayList<>();
