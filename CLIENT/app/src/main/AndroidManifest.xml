@@ -29,7 +29,8 @@
             android:label="@string/title_activity_homepage"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.ShowActivity" />
-        <activity android:name=".activities.ValidateTicketsActivity"></activity>
+        <activity android:name=".activities.ValidateTicketsActivity" />
+        <activity android:name=".activities.VouchersToUse"></activity>
     </application>
 
 </manifest>

@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import musicline.cmov.org.feup.musicline.activities.ShowActivity;
+import musicline.cmov.org.feup.musicline.activities.VouchersToUse;
 import musicline.cmov.org.feup.musicline.adapters.MyAdapter;
 import musicline.cmov.org.feup.musicline.R;
 import musicline.cmov.org.feup.musicline.objects.Show;
@@ -80,11 +81,8 @@ public class CafeteriaFragment extends Fragment{
         add_vouchers.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment vouchersFragment = new MyVouchersFragment();
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_cafeteria, vouchersFragment)
-                        .commit();
+                Intent intent = new Intent(getActivity(), VouchersToUse.class);
+                startActivity(intent);
             }
         });
 
