@@ -86,6 +86,7 @@ public class CafeteriaFragment extends Fragment{
             }
         });
 
+        //in the case of missclick the user can erase the order and start a new one
         delete_order.setOnClickListener(new OnClickListener(){
 
             @Override
@@ -204,6 +205,10 @@ public class CafeteriaFragment extends Fragment{
         return view;
     }
 
+    /**
+     * Makes as order, sending information of customerId, products and their quantities and vouchers
+     */
+
     public void newOrder(){
         RequestQueue queue = Volley.newRequestQueue(this.getContext());
         String url = Globals.URL + "/order";
@@ -250,6 +255,10 @@ public class CafeteriaFragment extends Fragment{
 
         queue.add(request);
     }
+
+    /**
+     * Transforms order in a JSONArray
+     */
 
     public JSONArray getOrderProducts(){
         JSONArray products = new JSONArray();
