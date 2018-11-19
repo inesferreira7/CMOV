@@ -1,6 +1,7 @@
 package musicline.cmov.org.feup.musicline.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,10 +37,12 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import musicline.cmov.org.feup.musicline.R;
 import musicline.cmov.org.feup.musicline.adapters.VouchersToUseAdapter;
+import musicline.cmov.org.feup.musicline.fragments.CafeteriaFragment;
 import musicline.cmov.org.feup.musicline.fragments.MyVouchersFragment;
 import musicline.cmov.org.feup.musicline.objects.Ticket;
 import musicline.cmov.org.feup.musicline.objects.Voucher;
@@ -52,11 +56,18 @@ public class VouchersToUse extends AppCompatActivity {
     ListView list_vouchers;
     VouchersToUseAdapter<Voucher> voucher_adapter;
     SparseBooleanArray spa;
+    HashMap<String, Integer> orderProducts;
+    Button addVouchers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vouchers_to_use);
+
+        Intent intent = getIntent();
+        orderProducts = (HashMap<String, Integer>) intent.getSerializableExtra("Order");
+
+        addVouchers = (Button)findViewById(R.id.addVouchers);
 
         spa = new SparseBooleanArray();
 
@@ -76,8 +87,20 @@ public class VouchersToUse extends AppCompatActivity {
             }
         }
         list_vouchers = (ListView)findViewById(R.id.list_vouchers_to_use);
-        voucher_adapter = new VouchersToUseAdapter(getBaseContext(), vouchers);
+        voucher_adapter = new VouchersToUseAdapter(getBaseContext(), vouchers, orderProducts);
 
+
+        addVouchers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Voucher> vouchersToUse = voucher_adapter.getCheckedItems();
+
+                Intent i = new Intent();
+                i.putExtra("vouchers", vouchersToUse);
+                setResult(RESULT_OK, i);
+                finish();
+            }
+        });
     }
 
     public void listVouchers(final JSONArray voucherList) {

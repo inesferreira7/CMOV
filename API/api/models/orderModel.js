@@ -27,11 +27,7 @@ var OrderSchema = new Schema({
     vouchers: [
         {
             voucherId: {
-                type: Schema.Types.ObjectId,
-                validate: [
-                    arrayLimit,
-                    '{PATH} exceeds the limit of 2 vouchers'
-                ]
+                type: Schema.Types.ObjectId
             }
         }
     ],
@@ -44,9 +40,4 @@ var OrderSchema = new Schema({
         default: false
     }
 });
-
-function arrayLimit(val) {
-    return val.length <= 2;
-}
-
 module.exports = mongoose.model('Order', OrderSchema);

@@ -1,6 +1,8 @@
 package musicline.cmov.org.feup.musicline.objects;
 
-public class Voucher {
+import java.io.Serializable;
+
+public class Voucher implements Serializable {
     String id, customerId, type;
     boolean isUsed;
 
