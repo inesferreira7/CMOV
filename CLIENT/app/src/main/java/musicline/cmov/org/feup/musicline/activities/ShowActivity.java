@@ -108,7 +108,9 @@ public class ShowActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         buyTickets(show);
-                        createVoucher(false);
+                        for(int q=1; q <= Integer.parseInt(actual_quantity); q++) {
+                            createVoucher(false);
+                        }
                         if(Integer.parseInt(actual_quantity) * show.getTicketPrice().intValue() % 100 == 0){
                             createVoucher(true);
                         }
