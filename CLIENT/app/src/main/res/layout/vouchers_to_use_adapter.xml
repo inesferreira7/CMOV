@@ -35,13 +35,13 @@
             android:maxLines="1"
             android:textSize="15sp"
             android:textStyle="bold" />
-
-        <CheckBox
-            android:id="@+id/chkEnable_toUse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text=""/>
-
     </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/chkEnable_toUse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text=""/>
 </RelativeLayout>
