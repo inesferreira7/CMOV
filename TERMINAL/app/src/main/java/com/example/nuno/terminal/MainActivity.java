@@ -28,7 +28,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
     Button ticketButton;
-    public static String URL = "https://9db8b2c1.ngrok.io";
+    Button orderButton;
+    public static String URL = "https://800f6f20.ngrok.io";
     List<Ticket> tickets;
 
     @Override
@@ -39,11 +40,19 @@ public class MainActivity extends AppCompatActivity {
         tickets = new ArrayList<>();
 
         ticketButton = (Button) findViewById(R.id.scanButton);
+        orderButton = (Button) findViewById(R.id.orderButton);
 
         ticketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 scanTickets(true);
+            }
+        });
+
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanOrders(true);
             }
         });
     }
@@ -53,6 +62,17 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(ACTION_SCAN);
             intent.putExtra("SCAN_MODE", qrcode ? "QR_CODE_MODE" : "PRODUCT_MODE");
             startActivityForResult(intent, 0);
+        }
+        catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void scanOrders(boolean qrcode) {
+        try {
+            Intent intent = new Intent(ACTION_SCAN);
+            intent.putExtra("SCAN_MODE", qrcode ? "QR_CODE_MODE" : "PRODUCT_MODE");
+            startActivityForResult(intent, 1);
         }
         catch (ActivityNotFoundException e) {
             e.printStackTrace();
@@ -71,6 +91,19 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 validateTickets(tickets);
+            }
+        } else if (requestCode == 1){
+            if (resultCode == RESULT_OK){
+                JSONObject order = new JSONObject();
+
+                try{
+                    order = new JSONObject(data.getStringExtra("SCAN_RESULT"));
+                    Log.i("order", order.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                validateOrder(order);
             }
         }
     }
@@ -97,6 +130,28 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                         dialog.show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Error API call", error.toString());
+                    }
+                }
+        );
+
+        queue.add(request);
+    }
+
+    public void validateOrder(final JSONObject o){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = URL + "/order/validate";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, o,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("Response", response.toString());
                     }
                 },
                 new Response.ErrorListener() {

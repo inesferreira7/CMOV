@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.zxing.BarcodeFormat;
@@ -12,15 +13,19 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 
 import musicline.cmov.org.feup.musicline.R;
 import musicline.cmov.org.feup.musicline.objects.Order;
 import musicline.cmov.org.feup.musicline.objects.Ticket;
+import musicline.cmov.org.feup.musicline.objects.Voucher;
 
 public class ValidateOrderActivity extends AppCompatActivity {
     ImageView qrCodeImageview;
@@ -46,13 +51,41 @@ public class ValidateOrderActivity extends AppCompatActivity {
 
     void createRequest(){
         JSONObject request = new JSONObject();
+        JSONArray vouchers = new JSONArray();
+        JSONArray products = new JSONArray();
+
+        Iterator it = order.getProducts().entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry pair = (Map.Entry)it.next();
+            JSONObject product = new JSONObject();
+
+            try {
+                product.put("product", (String)pair.getKey());
+                product.put("quantity", (Integer)pair.getValue());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            products.put(product);
+        }
+
+        for(int i = 0; i < order.getVouchers().size(); i++){
+            JSONObject voucher = new JSONObject();
+
+            try {
+                voucher.put("voucherId", order.getVouchers().get(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            vouchers.put(voucher);
+        }
 
         try {
             request.put("id", order.getId());
             request.put("customerId", order.getCustomerId());
-            request.put("products", order.getProducts());
-            request.put("vouchers", order.getVouchers());
-            request.put("totalPrice", order.getTotalPrice());
+            request.put("products", products);
+            request.put("vouchers", vouchers);
+            request.put("totalPrice", Double.toString(order.getTotalPrice()));
             request.put("validated", order.isValidated());
         } catch (JSONException e) {
             e.printStackTrace();

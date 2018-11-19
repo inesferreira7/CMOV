@@ -7,4 +7,5 @@ module.exports = function(app){
     app.get('/orders/customer/:customerId', order.getAllOrders);
     app.get('/order', order.getOrder);
     app.post('/order', order.createOrder);
+    app.post('/order/validate', order.validateOrder);
 }
