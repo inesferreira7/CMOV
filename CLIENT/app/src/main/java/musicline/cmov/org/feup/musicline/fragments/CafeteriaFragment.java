@@ -33,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,8 +42,10 @@ import musicline.cmov.org.feup.musicline.activities.VouchersToUse;
 import musicline.cmov.org.feup.musicline.adapters.MyAdapter;
 import musicline.cmov.org.feup.musicline.R;
 import musicline.cmov.org.feup.musicline.objects.Show;
+import musicline.cmov.org.feup.musicline.objects.Voucher;
 import musicline.cmov.org.feup.musicline.utils.Globals;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 public class CafeteriaFragment extends Fragment{
@@ -55,6 +58,7 @@ public class CafeteriaFragment extends Fragment{
     TextView order_total_text;
     Button create_order, add_vouchers;
     ImageButton delete_order;
+    ArrayList<Voucher> vouchersToUse;
 
     public CafeteriaFragment() { }
 
@@ -63,6 +67,8 @@ public class CafeteriaFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_cafeteria, container, false);
+
+        vouchersToUse = new ArrayList<>();
 
         delete_order = (ImageButton)view.findViewById(R.id.clear_button);
         delete_order.setVisibility(View.INVISIBLE);
@@ -82,7 +88,8 @@ public class CafeteriaFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), VouchersToUse.class);
-                startActivity(intent);
+                intent.putExtra("Order", order);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -210,13 +217,25 @@ public class CafeteriaFragment extends Fragment{
         SharedPreferences prefs = this.getContext().getSharedPreferences(Globals.PREFERENCES_NAME, MODE_PRIVATE);
 
         JSONObject body = new JSONObject();
+        JSONArray vouchers = new JSONArray();
+
+        for(int i = 0; i < vouchersToUse.size(); i++){
+            JSONObject voucher = new JSONObject();
+            try {
+                voucher.put("voucherId", vouchersToUse.get(i).getId());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            vouchers.put(voucher);
+        }
 
         try {
             JSONArray products = getOrderProducts();
 
             body.put("customerId", prefs.getString("uuid", ""));
             body.put("products", products);
-            body.put("vouchers", new JSONArray());
+            body.put("vouchers", vouchers);
             body.put("totalPrice", order_total);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -259,4 +278,12 @@ public class CafeteriaFragment extends Fragment{
         return products;
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1){
+            if(resultCode == RESULT_OK){
+                vouchersToUse = (ArrayList<Voucher>) data.getSerializableExtra("vouchers");
+            }
+        }
+    }
 }

@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Map;
 
 import musicline.cmov.org.feup.musicline.R;
@@ -29,7 +29,7 @@ public class MyAdapter extends BaseAdapter{
         orderData.addAll(order.entrySet());
     }
 
-    public void updateList(HashMap<Globals.Item, Integer> data) {
+    public void updateList(Map<Globals.Item, Integer> data) {
         orderData.clear();
         orderData.addAll(data.entrySet());
         notifyDataSetChanged();
