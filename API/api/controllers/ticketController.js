@@ -64,8 +64,6 @@ exports.deleteTicket = (req, res) => {
  * If no error is encountered, sends a response with a 200 status code and updates the used status of the ticket.
  */
 exports.validateTicket = (req, res) => {
-    console.log("Begin ticket validation...") 
-
     var elements = req.body[0].ids.substring(1, req.body[0].ids.length-1);
     var elements_array = elements.split(", ");
     var query = {
@@ -87,7 +85,7 @@ exports.validateTicket = (req, res) => {
                     });
                 } 
             }
-            console.log(JSON.stringify(result));
+
             res.status(200).send(JSON.stringify(result));
         }
     })

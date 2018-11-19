@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
     Button ticketButton;
     Button orderButton;
-    public static String URL = "https://800f6f20.ngrok.io";
+    public static String URL = "https://36d51b19.ngrok.io";
     List<Ticket> tickets;
 
     @Override
@@ -151,6 +151,16 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray vouchers = response.getJSONArray("vouchers");
+                            boolean isValidated = response.getBoolean("isValidated");
+                            int orderNumber = response.getInt("orderNumber");
+                            JSONArray products = response.getJSONArray("products");
+                            double totalPrice = response.getDouble("totalPrice");
+                            String nif = response.getString("nif");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         Log.i("Response", response.toString());
                     }
                 },
