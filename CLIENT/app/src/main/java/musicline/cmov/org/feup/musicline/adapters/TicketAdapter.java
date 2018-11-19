@@ -76,6 +76,9 @@ public class TicketAdapter<T> extends BaseAdapter {
         TextView performanceName = ((TextView) convertView.findViewById(R.id.performance_name));
         performanceName.setText(ticket.getPerformanceName());
 
+        TextView performanceDate = ((TextView) convertView.findViewById(R.id.performance_date));
+        performanceDate.setText(ticket.getPerformanceDate());
+
         CheckBox checkbox = (CheckBox) convertView.findViewById(R.id.chkEnable);
         checkbox.setTag(position);
         checkbox.setChecked(this.spa.get(position));
