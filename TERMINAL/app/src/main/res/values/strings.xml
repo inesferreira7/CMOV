@@ -2,5 +2,6 @@
     <string name="app_name">Terminal</string>
     <string name="ticket_button">Scan tickets</string>
     <string name="order_button">Scan orders</string>
+    <string name="receipt">Receipt</string>
 
 </resources>

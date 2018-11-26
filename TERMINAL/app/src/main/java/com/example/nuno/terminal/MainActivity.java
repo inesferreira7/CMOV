@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
     Button ticketButton;
     Button orderButton;
-    public static String URL = "https://36d51b19.ngrok.io";
+    public static String URL = "https://e72d9a91.ngrok.io";
     List<Ticket> tickets;
 
     @Override
@@ -99,11 +99,13 @@ public class MainActivity extends AppCompatActivity {
                 try{
                     order = new JSONObject(data.getStringExtra("SCAN_RESULT"));
                     Log.i("order", order.toString());
+
+                    validateOrder(order);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                validateOrder(order);
             }
         }
     }
@@ -151,13 +153,39 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        JSONArray vouchers, products;
+                        boolean isValidated;
+                        int orderNumber;
+                        double totalPrice;
+                        String nif;
                         try {
-                            JSONArray vouchers = response.getJSONArray("vouchers");
-                            boolean isValidated = response.getBoolean("isValidated");
-                            int orderNumber = response.getInt("orderNumber");
-                            JSONArray products = response.getJSONArray("products");
-                            double totalPrice = response.getDouble("totalPrice");
-                            String nif = response.getString("nif");
+                            if(!response.isNull("message")){
+                                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
+                                dialog.setTitle("Order validation");
+                                dialog.setMessage("Order already validated!");
+                                dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                dialog.show();
+                            }else {
+                                vouchers = response.getJSONArray("vouchers");
+                                orderNumber = response.getInt("orderNumber");
+                                products = response.getJSONArray("products");
+                                totalPrice = response.getDouble("totalPrice");
+                                nif = response.getString("nif");
+
+                                Intent intent = new Intent(getApplicationContext(), OrderValidated.class);
+                                intent.putExtra("ORDER_NUMBER", String.valueOf(orderNumber));
+                                intent.putExtra("ORDER_PRODUCTS", products.toString());
+                                intent.putExtra("ORDER_VOUCHERS", vouchers.toString());
+                                intent.putExtra("TOTAL_PRICE", String.valueOf(totalPrice));
+                                intent.putExtra("NIF", nif);
+                                startActivity(intent);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

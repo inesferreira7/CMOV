@@ -6,7 +6,7 @@ package musicline.cmov.org.feup.musicline.utils;
 
 public class Globals {
     public static String PREFERENCES_NAME = "UserPreferences";
-    public static String URL = "https://36d51b19.ngrok.io";
+    public static String URL = "https://e72d9a91.ngrok.io";
     public enum Item {Coffee, Soda, Popcorn, Sandwich};
     public static double COFFEE_PRICE = 1.00;
     public static double SODA_PRICE = 1.50;

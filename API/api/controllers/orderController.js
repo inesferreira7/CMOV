@@ -39,7 +39,6 @@ exports.validateOrder = (req, res) => {
     var query = {
         _id: req.body.id,
         customerId: req.body.customerId,
-        validated: req.body.validated
     }
 
     var voucherIds = new Array();
@@ -83,7 +82,7 @@ exports.validateOrder = (req, res) => {
 
                                 resultV[i].save((err) => {
                                     if (err) res.status(500).send(err);
-                                });  
+                                });
                                 validated.vouchers.push(resultV[i].type);
                             }
                         }
@@ -103,24 +102,22 @@ exports.validateOrder = (req, res) => {
                         validated.orderNumber = Math.floor((Math.random() * 200) + 1);
                         validated.products = result[0].products;
                         validated.totalPrice = result[0].totalPrice;
-                        
+
                         Customer.find({_id: result[0].customerId}, (err, customer) =>{
                             if (err) res.status(500).send(err);
                             else {
                                 validated.nif = customer[0].nif;
-                                result[0].validated = true;
-                                result[0].save(err => {
-                                    if (err) res.status(500).send(err);
-                                });
-
                                 validated.isValidated = true;
-
-                                res.status(200).send(validated);
                             }
                         });
-                        
+
+                        result[0].validated = true;
+                        result[0].save(err => {
+                            if (err) res.status(500).send(err);
+                            res.status(200).send(validated);
+                        });
                     }
-                });               
+                });
             }
         }
     });
